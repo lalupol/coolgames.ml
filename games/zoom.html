@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Google Classroom</title>
+	<link rel="icon" type="image/png" href="//ssl.gstatic.com/classroom/favicon.png">
+	<link href="/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+	<!--navigation-->
+	<div class="navbar">
+		<b>
+      <a href="/index.html" class="left">
+      <div class="home_icon"><img src="/img/home-icon.png" width="20" height="20"></img> ‍ HOME</div></a>
+      <a href="/graphics" class="right" id="loadNoAnim">Graphics</a>
+      <a href="/games" class="right">Games</a>
+      <b>
+  </div>
+
+  <!--stop onload animations-->
+  <script src="no-loading-animation.js"></script>
+
+  <br><center><canvas id="mycanvas"></canvas></center>
+
+  <script src="https://cdn.jsdelivr.net/processing.js/1.4.8/processing.min.js"></script>
+  <script>
+  var programCode = function(processingInstance) {
+    with (processingInstance) {
+      size(999,700);
+      noStroke();
+      fill(255, 0, 225);
+      rect(0,0,width,height/3);
+      fill(181, 33, 255);
+      rect(0,1/3*height,width,height/3);
+      fill(51, 0, 255);
+      rect(0,2/3*height-1,width,height/3+1);
+      var oneFiveEight="on zoomgame.tk/adv1.html!";
+      var nothingYet=538298;
+      var lives=1;
+      var i=0;
+      var r=255;
+      var g=0;
+      var b=255;
+      var instructing=8;
+      var instructing1=11;
+      var playing=false; // buttons dont work in game
+      var lost=false;
+      var gameSet=100;
+      var px=399.5;
+      var py=200;
+      var pw=50;
+      var ph=50;
+      var instruct=499.5;
+      var instructions=0;
+      var lava=false;
+      var timer=false;
+      var block;
+      var ly1=-150;
+      var ly2=-150;
+      var ly3=-150;
+      var ly4=-150;
+      var ly5=-150;
+      var ly6=-150;
+      var ly7=-150;
+      var ly8=-150;
+      var ly9=-150;
+      var sped="Speed Level 3!"
+      var l1=4.5;
+      var You_Lost="CONGRATS! Press the ctrl button on your\nkeyboard when the score is\ngreater than 5 for a\nSCORE DOUBLER next round!"
+      var l2=5.5;
+      var l3=7;
+      var l4=6;
+      var l5=5.5;
+      var l6=6.5;
+      var l7=6;
+      var TryAgain="Press the ENTER key for a SCORE QUADRUPLER\nwhen the score is greater than 30!";
+      var l8=7;
+      var l9=4.5;
+      var x1=162.25;
+      var x2=x1+75;
+      var x3=x2+75;
+      var x4=x3+75;
+      var x5=x4+75;
+      var x6=x5+75;
+      var x7=x6+75;
+      var x8=x7+75;
+      var x9=x8+75;
+      var lh=250;
+      var speed=2;
+      var spd=500;
+      var stop1=0.02;
+      var sd=500;
+      var sd2=500;
+      var sd3=500;
+      var sd4=500;
+      var sd5=500;
+      var sd6=500;
+      var sd7=500;
+      var sd8=500;
+      var sd9=500
+      
+      	  //homepage
+		  while (i<333) {
+			fill(r,g,b);
+			rect(0,i,width,1);
+			i++;
+			g=g+0.09909909909;
+			r=r-0.22222222222;
+		  }
+		  while (i>320.9 && i<999) {
+			fill(r,g,b);
+			rect(0,i,width,1);
+			i++;
+			g=g-0.09909909909;
+			r=r-0.39039039039;
+		  }
+		  textAlign(CENTER,CENTER);
+		  fill(0,0,0);
+		  textSize(200);
+		  text("ZOOM",999/2,700/2-150);
+		  fill(0, 157, 168);
+		  //play button
+		  rect(999/2-100,700/2+50,200,100,10);
+		  fill(255, 255, 255);
+		  textSize(75);
+		  text("Play!",999/2,700/2+95);
+		  draw=function() {
+			  mouseClicked=function() {
+				if (mouseX>399.5 && mouseX<599.5 && mouseY>400 && mouseY<500) {
+					playing=true;
+				}
+			  };
+			  if (playing===true) {
+			  	background(255,255,255);
+			  	//rect(x,y,width,height,trim);
+			  	//ellipse(x,y,width,height);
+			  	fill(200,204,200);
+			  	//bottom
+			  	rect(gameSet,250,3/4*width,50,200);
+			  	//left
+			  	rect(gameSet,125,50,175,200);
+			  	//right
+			  	rect(gameSet+700,125,50,175,200);
+			  	//character
+			  	fill(255, 153, 0);
+			  	rect(px,py,pw,ph);
+			  	if (keyPressed && keyCode===LEFT && px>150) {
+			  		px-=speed;
+			  	}
+			  	if (keyPressed && keyCode===RIGHT && px<749) {
+			  		px+=speed;
+			  	}
+			  	textSize(15);
+			  	fill(0,0,0);
+			  	textAlign(LEFT);
+			  	if (lost===false) {
+			  		text("Score: " + instructions,40,30);
+			  	}
+			  	fill(255,255,255);
+			  	rect(117,10,200,30);
+			  	textAlign(CENTER,CENTER)
+			  	textSize(20);
+			  	fill(0,0,0);
+			  	text("INTSTRUCTIONS:\nTry to avoid the red lava!\nYou are the orange character, and\narrow keys to move ONLY.\nPress DOWN to stop moving.\nGood Luck and try to BEAT a score of\n 20!! (Press the right arrow\n key to start.)",instruct,450);
+			  	text("Leaderboard (NEW!!)\n1. The PRO Gamer  173.7\n2. TC 47.8\n3. Be Cushion  39.4",instruct,600);
+			  	if (keyPressed && keyCode===LEFT || keyCode===RIGHT || keyCode===UP || keyCode===DOWN) {
+			  		instruct++;
+			  		lava=true;
+			  	}
+			  	function block(x,y,w,h) {
+			  		fill(255,0,0);
+			  		rect(x,y,w,h);
+			  	};
+
+			  	//if the player loses
+			  	if (lost===true) {
+			  		playing=false;
+			  		spd=10000;
+			  		var n=instructions;
+			  		fill(0,0,0);
+			  		rect(0,0,1000,900);
+			  		fill(255,255,255);
+			  		textSize(120);
+			  		text("GAME OVER!",width/2,height/2-150);
+			  		textSize(20);
+			  		fill(150,150,150);
+			  		text("(Click in a certain spot for a surprise!)",width/2,height/2+75)
+			  		fill(0,0,250);
+			  		textSize(30);
+			  		text("New game on adventure1.000webhostapp.com!",width/2,height/2-70);
+			  		textSize(20);
+			  		fill(255,255,255);
+			  		text("Reload to play again",width/2,height/2+300);
+			  		textAlign(LEFT);
+					text("Your score was: " + n,width/2-90,height/2-20);
+			  		textAlign(CENTER,CENTER);
+			  		fill(0,0,0);
+			  		rect(width/2+96,height/2-45,300,30);
+			  		if (instructions>19.5) {
+				  		fill(255, 191, 0);
+				  		textSize(40);
+			  			text(You_Lost,width/2,height/2+180);
+			  		}
+			  		if (instructions>39.5) {
+			  			fill(2, 173, 28);
+			  			textSize(25);
+			  			text("You are doing REAL GOOD\nMANY people can't make it this far!\nYou are now a PROFESSIONAL! :D",width/2,height/2+25);
+			  		}
+			  		if (instructions>47.8) {
+			  		    background(0,0,255);
+			  		    fill(0,255,0);
+			  		    textSize(50);
+			  		    text("GREAT JOB!\nYou made it to the\nWORLDWIDE LEADERBOARD!! Say this\nSECRET code to the creator of this\ngame to be FAMOUS WORLDWIDE!!\nThe code is "+nothingYet+"! ;D",width/2,height/2);
+			  		}
+			  		if (instructions>49.5) {
+			  			fill(2,173,28);
+			  			rect(0,0,1000,1000);
+			  			textSize(100);
+			  			fill(255,191,0);
+			  			rect(0,30,width,150);
+			  			fill(0,0,0);
+			  			text("You are a\nGRAND MASTER!\nWay to go!",width/2,height/2);
+			  			fill(2,173,28);
+			  			text("Try Again",width/2,100);
+			  			textAlign(LEFT);
+			  			textSize(25);
+			  			fill(0,0,0);
+						text("Your score was: " + n,width/2-100,height/2+235);
+						textAlign(CENTER,CENTER);
+						fill(2,173,28);
+			  			rect(width/2+132,height/2+210,300,30);
+			  			fill(0,0,0);
+			  			textSize(20);
+			  			text("Nice Job, you are a GRAND MASTER!! Press the ALT KEY for a score TRIPLER\nwhen the score is greater than 10!",width/2,height-30);
+			  			fill(0,255,0);
+			  		    textSize(20);
+			  		    text("GREAT JOB! You made it to the WORLDWIDE LEADERBOARD!! Say this\nSECRET code to the creator of this game to be FAMOUS WORLDWIDE!! The code is "+oneFiveEight,width/2,height-80);
+			  		}
+			  		if (instructions>84.5) {
+			  			fill(224, 196, 13);
+			  			rect(0,0,width,height);
+			  			fill(0, 200, 0);
+			  			textSize(200);
+			  			text("YOU WIN!",width/2,height/2);
+			  			textAlign(LEFT);
+			  			textSize(25);
+			  			fill(0,0,0);
+						text("Your score was: " + n,width/2-100,height/2+235);
+						fill(224, 196, 13);
+						rect(width/2+132,height/2+210,300,30);
+						textAlign(CENTER,CENTER);
+			  			textSize(30);
+			  			text(TryAgain,width/2,height-50);
+			  		}
+			  	}
+			  	if (instructions>instructing) {
+			  		textSize(100);
+			  		text(sped,spd,450);
+			  		speed=3;
+			  		if (instructions>instructing1) {
+			  			spd=10000;
+			  		}
+			  	}
+
+			  	// player collisions
+			  	if (px+pw>x1 && ly1+lh>py && px<x1+25.5 && lives===1) {
+			  		lost=true;
+			  	}
+			  	if (px+pw>x2 && ly2+lh>py && px<x2+25.5 && lives===1) {
+					lost=true;
+			  	}
+			  	if (px+pw>x3 && ly3+lh>py && px<x3+25.5 && lives===1) {
+					lost=true;
+				}
+			  	if (px+pw>x4 && ly4+lh>py && px<x4+25.5 && lives===1) {
+					lost=true;
+				}
+			  	if (px+pw>x5 && ly5+lh>py && px<x5+25.5 && lives===1) {
+					lost=true;
+				}
+			  	if (px+pw>x6 && ly6+lh>py && px<x6+25.5 && lives===1) {
+					lost=true;
+				}
+			  	if (px+pw>x7 && ly7+lh>py && px<x7+25.5 && lives===1) {
+					lost=true;
+				}
+			  	if (px+pw>x8 && ly8+lh>py && px<x8+25.5 && lives===1) {
+					lost=true;
+				}
+			  	if (px+pw>x9 && ly9+lh>py && px<x9+25.5 && lives===1) {
+					lost=true;
+				}
+
+			  	if (lava===true) {
+			  		sd=10000;
+			  		sd2=10000;
+			  		timer=true;
+			  		block(x1,ly1,25.5,250);
+			  		block(x2,ly2,25.5,250);
+			  		block(x3,ly3,25.5,250);
+			  		block(x4,ly4,25.5,250);
+			  		block(x5,ly5,25.5,250);
+			  		block(x6,ly6,25.5,250);
+					block(x7,ly7,25.5,250);
+					block(x8,ly8,25.5,250);
+			  		block(x9,ly9,25.5,250);
+			  		ly1=ly1-l1;
+			  		ly2=ly2+l2;
+			  		ly3=ly3+l3;
+			  		ly4=ly4+l4;
+			  		ly5=ly5-l5;
+			  		ly6=ly6+l6;
+			  		ly7=ly7+l7;
+			  		ly8=ly8+l8;
+			  		ly9=ly9+l9;
+
+			  		if (ly1>0 && lost===false) {
+			  			l1=l1*-1;
+			  		}
+			  		if (ly1<-600 && lost===false) {
+			  			l1=l1*-1;
+			  		}
+			  		if (ly2>0 && lost===false) {
+						l2=l2*-1;
+					}
+					if (ly2<-600 && lost===false) {
+						l2=l2*-1;
+					}
+					if (ly3>0 && lost===false) {
+						l3=l3*-1;
+					}
+					if (ly3<-600 && lost===false) {
+						l3=l3*-1;
+					}
+					if (ly4>0 && lost===false) {
+						l4=l4*-1;
+					}
+					if (ly4<-600 && lost===false) {
+						l4=l4*-1;
+					}
+					if (ly5>0 && lost===false) {
+						l5=l5*-1;
+					}
+					if (ly5<-600 && lost===false) {
+						l5=l5*-1;
+					}
+					if (ly6>0 && lost===false) {
+						l6=l6*-1;
+					}
+					if (ly6<-600 && lost===false) {
+						l6=l6*-1;
+					}
+					if (ly7>0 && lost===false) {
+						l7=l7*-1;
+					}
+					if (ly7<-600 && lost===false) {
+						l7=l7*-1;
+					}
+					if (ly8>0 && lost===false) {
+						l8=l8*-1;
+					}
+					if (ly8<-600 && lost===false) {
+						l8=l8*-1;
+					}
+					if (ly9>0 && lost===false) {
+						l9=l9*-1;
+					}
+					if (ly9<-600 && lost===false) {
+						l9=l9*-1;
+					}
+			  	}
+			  	if (playing===true && timer===true) {
+			  		instructions=instructions+stop1;
+			  		if (keyPressed && keyCode===CONTROL && instructions>5) {
+			  			stop1=0.04;
+			  			if (instructions>8) {
+			  				sd=10000;
+			  			}
+			  		}
+			  		if (keyPressed && keyCode===ALT && instructions>10) {
+			  			stop1=0.06;
+			  			if (instructions>13) {
+			  				sd2=10000;
+			  			}
+			  		}
+			  		if (keyPressed && keyCode===ENTER && instructions>30) {
+			  			stop1=0.06;
+			  			if (instructions>33) {
+			  				sd3=10000;
+			  			}
+			  	}
+			  }
+		  };
+    };
+  }
+  }
+
+  var canvas = document.getElementById("mycanvas");
+  var processingInstance = new Processing(canvas, programCode);
+  </script>
+</body>
+
+</html>

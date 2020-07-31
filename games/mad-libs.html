@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Mad Libs</title>
+	<link rel="icon" type="image/png" href="//ssl.gstatic.com/classroom/favicon.png">
+	<link href="/style.css" rel="stylesheet" type="text/css"/>
+  <style>
+    h1{
+      text-align:center;
+      color:gold;
+    }
+    </style>
+</head>
+
+<body style="background-image: url('https://www.solidbackgrounds.com/images/website/950x534/950x534-blue-abstract-noise-free-website-background-image.jpg');background-repeat:repeat;background-size:cover;">
+	<!--navigation-->
+	<div class="navbar">
+		<b>
+      <a href="/index.html" class="left">
+      <div class="home_icon"><img src="/img/home-icon.png" width="20" height="20"></img> ‍ HOME</div></a>
+      <a href="/graphics" class="right" id="loadNoAnim">Graphics</a>
+      <a href="/games" class="right">Games</a>
+      <b>
+  </div>
+
+  <!--stop onload animations-->
+  <script src="no-loading-animation.js"></script>
+
+  <div style="margin: 0;position: absolute;top: 50%;left: 50%;-ms-transform: translate(-50%, -50%);transform: translate(-50%, -50%);text-align:center;vertical-align:center;font-family:Comic Sans MS">
+    <h1>Mad Libs!</h1>
+     
+    <ul>
+      <font color='white'>
+      Noun: <input type="text" id="noun1">
+      Adjective: <input type="text" id="adjective1">
+      <p>Someone's Name: <input type="text" id="person1">
+      Another Adjective: <input type="text" id="adjective2"></p>
+      <p>Adverb (a word ending with 'ly'): <input type="text" id="adverb1">
+      Number: <input type="text" id="number1"></p>
+      <p>A Song Name: <input type="text" id="song1">
+      Another Adverb: <input type="text" id="adverb2"></p>
+      </font>
+      </ul>
+    <p></p>
+    <label><font color='white'>Choose a story!</font>
+        <select id="storyy">
+            <option value="s1">Story 1</option>
+            <option value="s2">Story 2</option>
+            <option value="s2p2">Part 2 (story 2)</option>
+        </select>
+        </label>
+     <p></p>
+    <button id="lib-button">Lib it!</button>
+      
+    <p><strong><h3><font color='white'>Generated story:</font></h3></strong> 
+    </p>
+    <font color='white'>
+    <span id="stories"></span>
+    </white>
+    </div>
+    <script>
+      var libButton = document.getElementById('lib-button');
+      var libIt = function() {
+          var storyy=document.getElementById("storyy").value;
+          var noun1=document.getElementById("noun1").value;
+          var adjective1=document.getElementById("adjective1").value;
+          var person1=document.getElementById("person1").value;
+          var adjective2=document.getElementById("adjective2").value;    
+          var adverb1=document.getElementById("adverb1").value;
+          var number1=document.getElementById("number1").value;
+          var song1=document.getElementById("song1").value;
+          var adverb2=document.getElementById("adverb2").value;
+          var storyDiv = document.getElementById("stories");
+          if(storyy==="s1"){
+              storyDiv.innerHTML = "One day, <strong>"+person1+"</strong> ate <strong>"+noun1+"</strong>! Everyone became really scared of <strong>"+person1+"</strong>, until Mr. Gobbly-dooo-deek came! He was very <strong>"+adjective1+"</strong> and cool. Then, he ate <strong>"+person1+"</strong>! Like what an amazing story... :) BUT THEN, Mr. Gobbly-dooo-deek died! So <strong>"+person1+"</strong> escaped and ran away. Since the world had changed a lot since <strong>"+person1+"</strong>\'s assumed death, <strong>"+person1+"</strong> was very confused and accidentally fell off the edge of the earth. After all, the earth is flat! :P <p></p><u><i>THE END</i></u>";
+              fill(0,0,0);
+          }
+          else if(storyy==="s2"){
+              storyDiv.innerHTML = "One time <strong>"+person1+"\'s</strong> teacher told us to not talk and she said that this was her <i>final</i> warining. This was because of many VERY <strong>"+adjective1+"</strong> people who disturb the class and the teacher, of course. Unfortunately, the most chatty kid, was this <strong>" +adjective2+ "</strong> and chubby-looking kid. Everyone calls him a scrub because, well, WHY NOT? So anyways, the teacher threatens us that she will scold us very <strong>"+adverb1+ "</strong> that if someone talked, she would give that person <strong>" +number1+ "</strong> detentions!<p></p><i>*5 MINUTES LATER*</i><p></p>So the chubby guy talks. To be more specific, starts singing (very badly) <strong>"+song1+"</strong> at the top of his lungs. So... well... sadly, the teacher thought it was <strong>"+person1+"</strong>. So the short-tempered teacher runs up to <strong>"+person1+"</strong> and <strong>"+adverb2+"</strong> flips over <strong>"+person1+"</strong>\'s desk and yells, \"GET OUTTA HERE! RIGHT <i>NOW!</i>\" So yeah. Part 2 is somehwere in the stories you can choose above. Hope u enjoyed dis weird story! :)";
+              fill(0,0,0);
+          }
+          else if(storyy==="s2p2"){
+              storyDiv.innerHTML = "<strong>Read Part 1 if you haven't already!</strong><p></p>So then the (probably deaf) teacher finds out it wasn't <strong>"+person1+"</strong> and realizes it was the <i>other</i> guy. So, she KICKS dat chubby guy in the face. That's how he got kicked out of school.    .    .      (LITERALLY <i>KICKED</i> OUT OF SCHOOL)<p></p><i><u>THE END</u></i>";
+              fill(0,0,0);
+          }
+          document.getElementById("stories").innerHTML = storyDiv;
+      };
+      libButton.addEventListener('click', libIt);
+    </script>
+</body>
+
+</html>

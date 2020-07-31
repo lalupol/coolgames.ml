@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Mountain Scenery</title>
+	<link rel="icon" type="image/png" href="//ssl.gstatic.com/classroom/favicon.png">
+	<link href="/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+	<!--navigation-->
+	<div class="navbar">
+		<b>
+      <a href="/index.html" class="left">
+      <div class="home_icon"><img src="/img/home-icon.png" width="20" height="20"></img> ‍ HOME</div></a>
+      <a href="/graphics" class="right" id="loadNoAnim">Graphics</a>
+      <a href="/games" class="right">Games</a>
+      <b>
+  </div>
+
+  <!--stop onload animations-->
+  <script src="no-loading-animation.js"></script>
+
+  <br><center><canvas id="mycanvas"></canvas></center>
+
+  <script src="https://cdn.jsdelivr.net/processing.js/1.4.8/processing.min.js"></script>
+  <script>
+  var programCode = function(processingInstance) {
+    with (processingInstance) {
+        size(600,600);
+      
+        //set background to transparent
+        background(255, 0);
+        
+        //functions
+        {
+        var glowtext = function(x, y, txt, color){
+        	fill(color, 1.5);
+        	for(var i = 0;i<360;i++){
+        		text(txt, x+sin(i)*4, y+cos(i)*4);
+        	}
+        	fill(color+50);
+        	text(txt, x, y);
+        };
+        
+        var sun = function(x, y, size) {
+            for(var i = 0; i < 10; i++){
+                fill(242, 172, 41, 255 - 25*i);
+                ellipse(x, y, i*size, i*size);
+            }
+            
+        };
+        var SqLerp = function(num1, num2, amount){
+            return sqrt( lerp( sq(num1), sq(num2), amount) );
+        };
+        var Blend=function(c1,c2,amount){
+            return color(
+                SqLerp(   red(c1),   red(c2), amount),
+                SqLerp( green(c1), green(c2), amount),
+                SqLerp(  blue(c1),  blue(c2), amount)
+            );
+        };
+        
+        var tree=function(x,y,size){
+            pushMatrix();
+            translate(x,y);
+            scale(size/65);
+            
+            fill(181, 118, 36);
+            rect(-5,50,10,15);
+            
+            fill(160, 100, 15);
+            rect(0,50,5,15);
+            
+            fill(65, 235, 116);
+            triangle(0,10,-20,50,0,50);
+            
+            fill(7, 217, 70);
+            triangle(0,10,20,50,0,50);
+            popMatrix();
+        };
+        
+        var mountains=function(t){
+        noStroke();
+        fill(random(156-10,156+5), random(111-10,111+10), random(39-10,39+10),t);
+        beginShape();
+        vertex(0,550);
+        vertex(50,450);
+        vertex(150,350);
+        vertex(200,400);
+        vertex(300,550);
+        endShape();
+        
+        fill(random(156-10,156+5), random(111-10,111+10), random(39-10,39+10),t);
+        beginShape();
+        vertex(200,400);
+        vertex(210,370);
+        vertex(250,300);
+        vertex(300,350);
+        vertex(320,400);
+        vertex(320,400);
+        vertex(335,450);
+        vertex(380,550);
+        vertex(280,550);
+        endShape();
+        
+        fill(random(156-10,156+5), random(111-10,111+10), random(39-10,39+10),t);
+        beginShape();
+        vertex(320,400);
+        vertex(355,350);
+        vertex(385,280);
+        vertex(425,350);
+        vertex(440,370);
+        vertex(460,415);
+        vertex(495,475);
+        vertex(525,550);
+        vertex(380,550);
+        vertex(335,450);
+        endShape();
+        
+        fill(random(156-10,156+5), random(111-10,111+10), random(39-10,39+10),t);
+        beginShape();
+        vertex(460,415);
+        vertex(505,355);
+        vertex(570,315);
+        vertex(580,385);
+        vertex(600,425);
+        vertex(600,550);
+        vertex(420,550);
+        vertex(445,485);
+        endShape();
+        };
+        
+        var bird=function(){
+            beginShape();
+            vertex(110, 230);
+            vertex(113, 229);
+            vertex(112, 233);
+            vertex(107, 233);
+            vertex(110, 232);
+            vertex(106, 227);
+            vertex(113, 231);
+            vertex(113, 230);
+            vertex(121, 230);
+            vertex(110, 233);
+            endShape();
+        };
+        
+        }
+        
+        //make sun
+        noStroke();
+        sun(200,200,44);
+        
+        var sun = get(0,0,400,400);
+        
+        //make clouds
+        for(var i = 0; i < 7; i++) {
+            noStroke();
+            fill(255, 255, 255,15);
+            ellipse(random(585,596), random(592,593.66666), 10, 2);
+        }
+        for(var i = 0; i < 7; i++) {
+            noStroke();
+            fill(255, 255, 255,15);
+            ellipse(random(585,596), random(593.66666,595.33333), 10, 2);
+        }
+        for(var i = 0; i < 7; i++) {
+            noStroke();
+            fill(255, 255, 255,15);
+            ellipse(random(585,596), random(595.33333,597), 10, 2);
+        }
+        
+        var cloud = get(579, 590, 25, 10);
+        
+        //makes sure there are no gaps
+        strokeWeight(2);
+        
+        //background
+        var c1 = color(122, 141, 143);
+        for(var i = 0; i < 600; i++) {
+            stroke(lerpColor(color(c1), color(205, 254, 257), i/600));
+            line(0, height - i, width, height - i);
+        }
+        
+        //mountains & sun
+        pushMatrix();
+        translate(-300,-75);
+        mountains(75);
+        translate(500,-80);
+        mountains(75);
+        popMatrix();
+        filter(BLUR,4);
+        
+        //middle layer
+        pushMatrix();
+        translate(-250,0);
+        mountains(150);
+        translate(350,-100);
+        mountains(150);
+        popMatrix();
+        filter(BLUR,3);
+        
+        //sun
+        image(sun,100,275,200,200);
+        filter(BLUR,2);
+        
+        //front layer of mountains
+        pushMatrix();
+        translate(0,0);
+        mountains();
+        popMatrix();
+        
+        //display clouds
+        image(cloud,0,0,300,100);
+        image(cloud,0,0,300,100);
+        
+        image(cloud,300,50,300,100);
+        image(cloud,300,50,300,100);
+        image(cloud,300,50,300,100);
+        
+        image(cloud,75,125,300,100);
+        image(cloud,75,125,300,100);
+        image(cloud,75,125,300,100);
+        
+        //land
+        fill(156, 120, 0);
+        rect(0,550,width,50);
+        
+        //transition to land from bottom of mountains
+        for(var y=525; y<=600; y++){
+            stroke(44, 184, 74,255*((y-525)/60));
+            line(0, y, width, y);
+        }
+        
+        var treesize=20;
+        var treex=25;
+        var tree2x=75;
+        
+        pushMatrix();
+        translate(0,5);
+        noStroke();
+        tree(treex,530,treesize);
+        tree(tree2x,550,treesize);
+        tree(treex+100,530,treesize);
+        tree(tree2x+100,550,treesize);
+        tree(treex+200,530,treesize);
+        tree(tree2x+200,550,treesize);
+        tree(treex+300,530,treesize);
+        tree(tree2x+300,550,treesize);
+        tree(treex+400,530,treesize);
+        tree(tree2x+400,550,treesize);
+        tree(treex+500,530,treesize);
+        tree(tree2x+500,550,treesize);
+        popMatrix();
+        
+        /*
+        //Team Catageis Text
+        textSize(60);
+        textAlign(CENTER, CENTER);
+        glowtext(width/2,height/4,"Team",color(0, 0, 0));
+        textFont(createFont("Comic Sans MS"));
+        fill(52, 122, 168);
+        text("Cataegis",width/2,1.35*height/4);
+        */
+        
+        var scenery = get(0,0,600,600);
+        
+        var bird1x=0;
+        var bird1xacc=0;
+        var bird1xaccnum=0.005;
+        var bird2x=45;
+        var bird2xacc=0;
+        var bird2xaccnum=-0.005;
+        var bird3x=-25;
+        var bird3xacc=0;
+        var bird3xaccnum=0.005;
+        
+        draw = function() {
+            bird1xacc+=bird1xaccnum;
+            bird2xacc+=bird2xaccnum;
+            bird3xacc+=bird3xaccnum;
+            if(bird1xacc>0.5 || bird1xacc<-0.5){
+                bird1xaccnum*=-1;
+            }
+            if(bird2xacc>0.575 || bird2xacc<-0.575){
+                bird2xaccnum*=-1;
+            }
+            if(bird3xacc>0.6 || bird3xacc<-0.6){
+                bird3xaccnum*=-1;
+            }
+            image(scenery,0,0,600,600);
+            //birds
+            fill(25);
+            pushMatrix();
+            translate(bird1x,35);
+            bird();
+            popMatrix();
+            pushMatrix();
+            translate(bird2x,75);
+            bird();
+            popMatrix();
+            pushMatrix();
+            translate(bird3x,90);
+            bird();
+            popMatrix();
+            bird1x+=bird1xacc;
+            bird2x+=bird2xacc;
+            bird3x+=bird3xacc;
+        };
+
+
+
+  }
+  }
+
+  var canvas = document.getElementById("mycanvas");
+  var processingInstance = new Processing(canvas, programCode);
+  </script>
+</body>
+
+</html>

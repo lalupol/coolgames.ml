@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Google Classroom</title>
+	<link rel="icon" type="image/png" href="//ssl.gstatic.com/classroom/favicon.png">
+	<link href="/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+	<!--navigation-->
+	<div class="navbar">
+		<b>
+      <a href="/index.html" class="left">
+      <div class="home_icon"><img src="/img/home-icon.png" width="20" height="20"></img> ‍ HOME</div></a>
+      <a href="/graphics" class="right" id="loadNoAnim">Graphics</a>
+      <a href="/games" class="right">Games</a>
+      <b>
+  </div>
+
+  <!--stop onload animations-->
+  <script src="no-loading-animation.js"></script>
+
+  <br><center><canvas id="mycanvas"></canvas></center>
+
+  <script src="https://cdn.jsdelivr.net/processing.js/1.4.8/processing.min.js"></script>
+  <script>
+    var programCode = function(processingInstance) {
+      with (processingInstance) {
+        size(600,400);
+        var d1=196;
+	    var d2=255;
+	    var char;
+	    var button;
+	    var madScientist;
+	    var badrain;
+	    var d1val=0.0076862745098;
+	    var d2val=0.01;
+	    var taserx=55;
+	    var tasery=22;
+	    var explode=0;
+	    var i=0;
+	    var cx=250;
+	    var cy=200;
+	    {
+	    var rx=random(0,width);
+	    var ry=random(-600,0);
+	    var rx1=random(0,width);
+	    var ry1=random(-600,0);
+	    var rx2=random(0,width);
+	    var ry2=random(-600,0);
+	    var rx3=random(0,width);
+	    var ry3=random(-600,0);
+	    var rx4=random(0,width);
+	    var ry4=random(-600,0);
+	    var rx5=random(0,width);
+	    var ry5=random(-600,0);
+	    var rx6=random(0,width);
+	    var ry6=random(-600,0);
+	    var rx7=random(0,width);
+	    var ry7=random(-600,0);
+	    var rx8=random(0,width);
+	    var ry8=random(-600,0);
+	    var rx9=random(0,width);
+	    var ry9=random(-600,0);
+	    var rx10=random(0,width);
+	    var ry10=random(-600,0);
+	    var rx11=random(0,width);
+	    var ry11=random(-600,0);
+	    var rx12=random(0,width);
+	    var ry12=random(-600,0);
+	    var rx13=random(0,width);
+	    var ry13=random(-600,0);
+	    var rx14=random(0,width);
+	    var ry14=random(-600,0);
+	    var rx15=random(0,width);
+	    var ry15=random(-600,0);
+	    var rx16=random(0,width);
+	    var ry16=random(-600,0);
+	    var rx17=random(0,width);
+	    var ry17=random(-600,0);
+	    var rx18=random(0,width);
+	    var ry18=random(-600,0);
+	    var rx19=random(0,width);
+	    var ry19=random(-600,0);
+	    var rx20=random(0,width);
+	    var ry20=random(-600,0);
+	    var rx21=random(0,width);
+	    var ry21=random(-600,0);
+	    var rx22=random(0,width);
+	    var ry22=random(-600,0);
+	    var rx23=random(0,width);
+	    var ry23=random(-600,0);
+	    var rx24=random(0,width);
+	    var ry24=random(-600,0);
+	    var rx25=random(0,width);
+	    var ry25=random(-600,0);
+	    var rx26=random(0,width);
+	    var ry26=random(-600,0);
+	    var rx27=random(0,width);
+	    var ry27=random(-600,0);
+	    var rx28=random(0,width);
+	    var ry28=random(-600,0);
+	    var rx29=random(0,width);
+	    var ry29=random(-600,0);
+	    var rx30=random(0,width);
+	    var ry30=random(-600,0);
+	    }// raindrop values
+
+	    var b1=0;
+	    var b2=0;
+	    var b3=0;
+	    var b4=0;
+	    var b5=0;
+	    var b6=0;
+	    var b7=0;
+	    var b8=0;
+	    var b9=0;
+	    var b10=0;
+	    var b11=0;
+	    var b12=0;
+	    var b13=0;
+	    var b14=0;
+		var b15=0;
+		var b16=0;
+		var b17=0;
+		var b18=0;
+		var b19=0;
+		var b20=0;
+		var b21=0;
+		var b22=0;
+		var b23=0;
+		var b24=0;
+		var b25=0;
+	    var b26=0;
+	    var b27=0;
+		var b28=0;
+		var b29=0;
+		var b30=0;
+		var b31=0;
+		var b32=0;
+		var b33=0;
+		var b34=0;
+		var b35=0;
+		var b36=0;
+		var b37=0;
+		var b38=0;
+		var b39=0;
+	    var b40=0;
+	    var b41=0;
+		var b42=0;
+		var b43=0;
+		var b44=0;
+		var b45=0;
+		var b46=0;
+		var b47=0;
+		var b48=0;
+		var b49=0;
+	    var b50=0;
+	    var b51=0;
+		var b52=0;
+		var b53=0;
+		var b54=0;
+		var b55=0;
+		var b56=0;
+		var b57=0;
+		var b58=0;
+		var b59=0;
+	    var b60=0;
+	    var b61=0;
+		var b62=0;
+		var b63=0;
+		var b64=0;
+		var b65=0;
+		var b66=0;
+		var b67=0;
+		var b68=0;
+		var b69=0;
+	    var b70=0;
+	    var b71=0;
+		var b72=0;
+		var b73=0;
+		var b74=0;
+		var b75=0;
+		var b76=0;
+		var b77=0;
+		var b78=0;
+		var b79=0;
+	    var b80=0;
+	    var b81=0;
+		var b82=0;
+		var b83=0;
+		var b84=0;
+		var b85=0;
+		var b86=0;
+		var b87=0;
+		var b88=0;
+		var b89=0;
+	    var b90=0;
+	    var b91=0;
+		var b92=0;
+		var b93=0;
+		var b94=0;
+		var b95=0;
+		var b96=0;
+		var ls=-350;
+		var rs=599.5;
+	    var move=50;
+	    var skip=380;
+	    var instruct=width/2;
+	    var raining=false;
+	    var continuation=false;
+	    var cw=50;
+	    var ch=50;
+	    var rl=-1200;
+	    var lost=false;
+	    var win=false;
+	    var z=-3500;
+
+	    //only for reference
+	    var strok=function() {
+	        if (strok===true) {
+	            stroke(0, 0, 0);
+	            strokeWeight(1);
+	        }
+	    };
+
+	    //the character
+	    var char=function(px,py,w,h) {
+	        fill(255, 183, 0);
+	        rect(px,py,w,h);
+	        noFill();
+	        strokeWeight(1);
+	        stroke(0, 0, 0);
+	        arc(px+25,py+25,30,33,0,180);
+	        fill(255,183,0);
+	        noStroke();
+	        rect(px,py,w,h/2);
+	        fill(0, 0, 0);
+	        strokeWeight(7);
+	        stroke(0,0,0);
+	        point(px+17.5,py+15);
+	        point(px+30.5,py+15);
+	    };
+
+		//IDK why, maybe I will expand on this one day...
+	    var button=function(bx,by,bw,bh,bc,bt,bs,br,bg,bb) {
+	        fill(br, bg, bb);
+	        noStroke();
+	        rect(bx,by,bw,bh,bc);
+	        textAlign(CENTER,CENTER);
+	        fill(0, 0, 0);
+	        textSize(bs);
+	        text(bt,bx+bw/2,by+bh/2);
+	    };
+
+	    //The GRAND GAME (NOT the Grand CANYON!!)
+	    var game=function() {
+	        background(115, 190, 255);
+	        char(cx,cy,cw,ch);
+	        for (var gr=50;gr<600;gr+=50) {
+	            stroke(170, 170, 170);
+	            strokeWeight(3);
+	            line(gr,0,gr,400);
+	        }
+	        //The grid of gray lines
+	        for (var gc=50;gc<400;gc+=50) {
+	            stroke(170, 170, 170);
+	            strokeWeight(3);
+	            line(0,gc,600,gc);
+	        }
+	        fill(255,255,255);
+	        textAlign(CENTER,CENTER);
+	        textSize(20);
+	        text("INSTRUCTIONS:\nArrow keys to move ONLY.\nThere will be circles inside some boxes in the grid representing\nraindrops. The more bigger it is the closer it is to the ground.\nYour perspective is looking up at the sky from the ground.\nIf the circle is the size of the square\nof the grid it is on, that means it hit the ground.\nIf you were on that square while it hit the ground,\nyou would die as a raindrop hit YOU.\nOnce it filled the sqaure, you will die if\nyou go on it after it hits the ground.\nRember: you have been shrunk to the size of a RAINDROP!!\nIf you survive and all of the squares are filled with\nraindrops except for the one you are on, you WIN!!\nAlso, you are the ORANGE character.\n(Press the shift key to start.\nIf you are bored, go on zoomgame.tk, another game!)",instruct,height/2);
+	        if (keyPressed && keyCode===SHIFT) {
+	        	instruct=5000;
+	        }
+	        if (instruct===5000) {
+				keyPressed=function() {
+					if (lost===false && win===false) {
+						if (keyPressed&&keyCode===LEFT&&cx>0) {
+							cx=cx-move;
+						}
+						if (keyPressed&&keyCode===RIGHT&&cx<550) {
+							cx=cx+move;
+						}
+						if (keyPressed && keyCode===UP && cy>0) {
+							cy=cy-move;
+						}
+						if (keyPressed && keyCode===DOWN && cy<350) {
+							cy=cy+move;
+						}
+					}
+				};
+				//COPY AND PASTE: if(cx+25===275 && cy+25===225 && b>50){lost=true;}if (b<50&&b>50){b+=.9;}
+				badrain(25,25,b1);if(cx+25===25 && cy+25===25 && b1>50){lost=true;}if (b1<50&&b84>50){b1+=.3;}
+				badrain(75,25,b2);if(cx+25===75 && cy+25===25){lost=true;}if (b2<50){b2+=.9;}
+				badrain(125,25,b3);if(cx+25===125 && cy+25===25 && b3>50){lost=true;}if (b3<50&&b84>50){b3+=.3;}
+				badrain(175,25,b4);if(cx+25===175 && cy+25===25 && b4>50){lost=true;}if (b4<50&&b84>50){b4+=.3;}
+				badrain(225,25,b5);if(cx+25===225 && cy+25===25 && b5>50){lost=true;}if (b5<50&&b84>50){b5+=.3;}
+				badrain(275,25,b6);if(cx+25===275 && cy+25===25 && b6>50){lost=true;}if (b6<50&&b84>50){b6+=.3;}
+				badrain(325,25,b7);if(cx+25===325 && cy+25===25 && b7>50){lost=true;}if (b7<50&&b84>50){b7+=.3;}
+				badrain(375,25,b8);if(cx+25===375 && cy+25===25 && b8>50){lost=true;}if (b8<50&&b84>50){b8+=.3;}
+				badrain(425,25,b9);if(cx+25===425 && cy+25===25 && b9>50){lost=true;}if (b9<50&&b84>50){b9+=.3;}
+				badrain(475,25,b10);if(cx+25===475 && cy+25===25 && b10>50){lost=true;}if (b10<50&&b84>50){b10+=.3;}
+				badrain(525,25,b11);if(cx+25===25 && cy+25===25 && b11>50){lost=true;}if (b11<50&&b84>50){b11+=.3;}
+				badrain(575,25,b12);if(cx+25===575 && cy+25===25 && b12>50){lost=true;}if (b12<50&&b84>50){b12+=.3;}
+				badrain(25,75,b13);if(cx+25===25 && cy+25===75 && b13>50){lost=true;}if (b13<50&&b84>50){b13+=.3;}
+				badrain(75,75,b14);if(cx+25===75 && cy+25===75 && b14>50){lost=true;}if (b14<50&&b84>50){b14+=.3;}
+				badrain(125,75,b15);if(cx+25===125 && cy+25===75 && b15>50){lost=true;}if (b15<50&&b25>50){b15+=1.5;}
+				badrain(175,75,b16);if(cx+25===175 && cy+25===75 && b16>50){lost=true;}if (b16<50){b16+=5.0000000000001;}
+				badrain(225,75,b17);if(cx+25===225 && cy+25===75 && b17>50){lost=true;}if (b17<50){b17+=5.0000000000001;}
+				badrain(275,75,b18);if(cx+25===275 && cy+25===75 && b18>50){lost=true;}if (b18<50){b18+=5.0000000000001;}
+				badrain(325,75,b19);if(cx+25===325 && cy+25===75 && b19>50){lost=true;}if (b19<50){b19+=5.0000000000001;}
+				badrain(375,75,b20);if(cx+25===375 && cy+25===75 && b20>50){lost=true;}if (b20<50){b20+=5.0000000000001;}
+				badrain(425,75,b21);if(cx+25===425 && cy+25===75 && b21>50){lost=true;}if (b21<50){b21+=5.0000000000001;}
+				badrain(475,75,b22);if(cx+25===475 && cy+25===75 && b22>50){lost=true;}if (b22<50){b22+=1.5;}
+				badrain(525,75,b23);if(cx+25===525 && cy+25===75 && b23>50){lost=true;}if (b23<50&&b84>50){b23+=.3;}
+				badrain(575,75,b24);if(cx+25===575 && cy+25===75 && b24>50){lost=true;}if (b24<50&&b84>50){b24+=.3;}
+				badrain(25,125,b25);if(cx+25===25 && cy+25===125 && b25>50){lost=true;}if (b25<50&&b85>0){b25+=.7;}
+				badrain(75,125,b26);if(cx+25===75 && cy+25===125 && b26>50){lost=true;}if (b26<50&&b84>50){b26+=.3;}
+				badrain(125,125,b27);if(cx+25===125 && cy+25===125 && b27>50){lost=true;}if (b27<50){b27+=5.0000000000001;}
+				badrain(175,125,b28);if(cx+25===175 && cy+25===125 && b28>50){lost=true;}if (b28<50){b28+=5.0000000000001;}
+				badrain(225,125,b29);if(cx+25===225 && cy+25===125 && b29>50){lost=true;}if (b29<50&&b84>50){b29+=.3;}
+				badrain(275,125,b30);if(cx+25===275 && cy+25===125 && b30>50){lost=true;}if (b30<50&&b84>50){b30+=.3;}
+				badrain(325,125,b31);if(cx+25===325 && cy+25===125 && b31>50){lost=true;}if (b31<50&&b84>50){b31+=.3;}
+				badrain(375,125,b32);if(cx+25===375 && cy+25===125 && b32>50){lost=true;}if (b32<50&&b84>50){b32+=.3;}
+				badrain(425,125,b33);if(cx+25===425 && cy+25===125 && b33>50){lost=true;}if (b33<50&&b84>50){b33+=.3;}
+				badrain(475,125,b34);if(cx+25===475 && cy+25===125 && b34>50){lost=true;}if (b34<50){b34+=1.5;}
+				badrain(525,125,b35);if(cx+25===525 && cy+25===125 && b35>50){lost=true;}if (b35<50){b35+=1.5;}
+				badrain(575,125,b36);if(cx+25===575 && cy+25===125 && b36>50){lost=true;}if (b36<50&&b84>50){b36+=.3;}
+				badrain(25,175,b37);if(cx+25===25 && cy+25===175 && b37>50){lost=true;}if (b37<50&&b84>50){b37+=.3;}
+				badrain(75,175,b38);if(cx+25===75 && cy+25===175 && b38>50){lost=true;}if (b38<50){b38+=4.5;}
+				badrain(125,175,b39);if(cx+25===125 && cy+25===175 && b39>50){lost=true;}if (b39<50){b39+=5.0000000000001;}
+				badrain(175,175,b40);if(cx+25===175 && cy+25===175 && b40>50){lost=true;}if (b40<50&&b84>50){b40+=.3;}
+				badrain(225,175,b41);if(cx+25===225 && cy+25===175 && b41>50){lost=true;}if (b41<50&&b84>50){b41+=.3;}
+				badrain(275,175,b42);if(cx+25===275 && cy+25===175 && b42>50){lost=true;}if (b42<50&&b84>50){b42+=.3;}
+				badrain(325,175,b43);if(cx+25===325 && cy+25===175 && b43>50){lost=true;}if (b43<50&&b84>50){b43+=.3;}
+				badrain(375,175,b44);if(cx+25===375 && cy+25===175 && b44>50){lost=true;}if (b44<50&&b84>50){b44+=.3;}
+				badrain(425,175,b45);if(cx+25===425 && cy+25===175 && b45>50){lost=true;}if (b45<50&&b84>50){b45+=.3;}
+				badrain(475,175,b46);if(cx+25===475 && cy+25===175 && b46>50){lost=true;}if (b46<50&&b84>50){b46+=.3;}
+				badrain(525,175,b47);if(cx+25===525 && cy+25===175 && b47>50){lost=true;}if (b47<50){b47+=1.5;}
+				badrain(575,175,b48);if(cx+25===575 && cy+25===175 && b48>50){lost=true;}if (b48<50&&b84>50){b48+=.3;}
+				badrain(25,225,b49);if(cx+25===25 && cy+25===225 && b49>50){lost=true;}if (b49<50&&b84>50){b49+=.3;}
+				badrain(75,225,b50);if(cx+25===75 && cy+25===225 && b50>50){lost=true;}if (b50<50 && b74>50){b50+=11;}
+				badrain(125,225,b51);if(cx+25===125 && cy+25===225 && b51>50){lost=true;}if (b51<50){b51+=11;}
+				badrain(175,225,b52);if(cx+25===175 && cy+25===225 && b52>50){lost=true;}if (b52<50&&b54>25){b52+=4;}
+				badrain(225,225,b53);if(cx+25===225 && cy+25===225 && b53>50){lost=true;}if (b53<50&&b54>25){b53+=4;}
+				//starting pos of char
+				badrain(275,225,b54);if(cx+25===275 && cy+25===225 && b54>50){lost=true;}if (b54<50&&b2>50){b54+=.9;}
+				badrain(325,225,b55);if(cx+25===325 && cy+25===225 && b55>50){lost=true;}if (b55<50&&b2>50){b55+=4;}
+				badrain(375,225,b56);if(cx+25===375 && cy+25===225 && b56>50){lost=true;}if (b56<50&&b2>50){b56+=4;}
+				badrain(425,225,b57);if(cx+25===425 && cy+25===225 && b57>50){lost=true;}if (b57<50&&b84>50){b57+=.3;}
+				badrain(475,225,b58);if(cx+25===475 && cy+25===225 && b58>50){lost=true;}if (b58<50&&b84>50){b58+=.3;}
+				badrain(525,225,b59);if(cx+25===525 && cy+25===225 && b59>50){lost=true;}if (b59<50){b59+=1.5;}
+				badrain(575,225,b60);if(cx+25===575 && cy+25===225 && b60>50){lost=true;}if (b60<50&&b84>50){b60+=.3;}
+				badrain(25,275,b61);if(cx+25===25 && cy+25===275 && b61>50){lost=true;}if (b61<50&&b84>50){b61+=.3;}
+				badrain(75,275,b62);if(cx+25===75 && cy+25===275 && b62>50){lost=true;}if (b62<50 && b74>50){b62+=11;}
+				badrain(125,275,b63);if(cx+25===125 && cy+25===275 && b63>50){lost=true;}if (b63<50 && b74>50){b63+=11;}
+				badrain(175,275,b64);if(cx+25===175 && cy+25===275 && b64>50){lost=true;}if (b64<50){b64+=11;}
+				badrain(225,275,b65);if(cx+25===225 && cy+25===275 && b65>50){lost=true;}if (b65<50){b65+=11;}
+				badrain(275,275,b66);if(cx+25===275 && cy+25===275 && b66>50){lost=true;}if (b66<50&&b54>25){b66+=.9;}
+				badrain(325,275,b67);if(cx+25===325 && cy+25===275 && b67>50){lost=true;}if (b67<50){b67+=11;}
+				badrain(375,275,b68);if(cx+25===375 && cy+25===275 && b68>50){lost=true;}if (b68<50&&b84>50){b68+=.3;}
+				badrain(425,275,b69);if(cx+25===425 && cy+25===275 && b69>50){lost=true;}if (b69<50&&b84>50){b69+=.3;}
+				badrain(475,275,b70);if(cx+25===475 && cy+25===275 && b70>50){lost=true;}if (b70<50&&b84>50){b70+=.3;}
+				badrain(525,275,b71);if(cx+25===525 && cy+25===275 && b71>50){lost=true;}if (b71<50){b71+=1.5;}
+				badrain(575,275,b72);if(cx+25===575 && cy+25===275 && b72>50){lost=true;}if (b72<50&&b84>50){b72+=.3;}
+				badrain(25,325,b73);if(cx+25===25 && cy+25===325 && b73>50){lost=true;}if (b73<50&&b84>50){b73+=.3;}
+				badrain(75,325,b74);if(cx+25===75 && cy+25===325 && b74>50){lost=true;}if (b74<50&&b76>15){b74+=.9;}
+				badrain(125,325,b75);if(cx+25===125 && cy+25===325 && b75>50){lost=true;}if (b75<50&&b74>50){b75+=11;}
+				badrain(175,325,b76);if(cx+25===175 && cy+25===325 && b76>50){lost=true;}if (b76<50&&b90>40){b76+=.9;}
+				badrain(225,325,b77);if(cx+25===225 && cy+25===325 && b77>50){lost=true;}if (b77<50){b77+=11;}
+				badrain(275,325,b78);if(cx+25===275 && cy+25===325 && b78>50){lost=true;}if (b78<50&&b54>25){b78+=.9;}
+				badrain(325,325,b79);if(cx+25===325 && cy+25===325 && b79>50){lost=true;}if (b79<50){b79+=11;}
+				badrain(375,325,b80);if(cx+25===375 && cy+25===325 && b80>50){lost=true;}if (b80<50&&b84>50){b80+=.3;}
+				badrain(425,325,b81);if(cx+25===325 && cy+25===325 && b81>50){lost=true;}if (b81<50&&b84>50){b81+=.3;}
+				badrain(475,325,b82);if(cx+25===475 && cy+25===325 && b82>50){lost=true;}if (b82<50&&b84>50){b82+=.3;}
+				badrain(525,325,b83);if(cx+25===525 && cy+25===325 && b83>50){lost=true;}if (b83<50){b83+=1.5;}
+				badrain(575,325,b84);if(cx+25===575 && cy+25===325 && b84>50){lost=true;}if (b84<50&&b15>30){b84+=.40000000000001;}
+				badrain(25,375,b85);if(cx+25===25 && cy+25===375 && b85>50){lost=true;}if (b85<50&&b74>0){b85+=1.1;}
+				badrain(75,375,b86);if(cx+25===75 && cy+25===375 && b86>50){lost=true;}if (b86<50&&b84>50){b86+=.3;}
+				badrain(125,375,b87);if(cx+25===125 && cy+25===375 && b87>50){lost=true;}if (b87<50&&b84>50){b87+=.3;}
+				badrain(175,375,b88);if(cx+25===175 && cy+25===375 && b88>50){lost=true;}if (b88<50&&b84>50){b88+=.3;}
+				badrain(225,375,b89);if(cx+25===225 && cy+25===375 && b89>50){lost=true;}if (b89<50&&b84>50){b89+=.3;}
+				badrain(275,375,b90);if(cx+25===275 && cy+25===375 && b90>50){lost=true;}if (b90<50){b90+=1.5;}
+				badrain(325,375,b91);if(cx+25===325 && cy+25===375 && b91>50){lost=true;}if (b91<50&&b84>50){b91+=.3;}
+				badrain(375,375,b92);if(cx+25===375 && cy+25===375 && b92>50){lost=true;}if (b92<50&&b84>50){b92+=.3;}
+				badrain(425,375,b93);if(cx+25===425 && cy+25===375 && b93>50){lost=true;}if (b93<50&&b84>50){b93+=.3;}
+				badrain(475,375,b94);if(cx+25===475 && cy+25===375 && b94>50){lost=true;}if (b94<50&&b84>50){b94+=.3;}
+				badrain(525,375,b95);if(cx+25===525 && cy+25===375 && b95>50){lost=true;}if (b95<50){b95+=1.5;}
+				badrain(575,375,b96);if(cx+25===575 && cy+25===375){win=true;}
+			}
+			if(lost===true){
+				textSize(50);
+				fill(0,0,0);
+				rect(ls,0,350,400);
+				rect(rs,0,300,400);
+				if (rs>300){
+					rs-=2;
+				}
+				if (ls<0) {
+					ls+=2;
+				}
+				if (ls===0) {
+					fill(255,255,255);
+					text("YOU LOST!\n(Reload the page\nto play again.\nA shortcut to do this\nis to press CTRL+R)",width/2,height/2);
+				}
+	    	}
+	    	if(win===true){
+	    		background(255, 213, 0);
+	    		textSize(70);
+	    		text("YOU WON!! . . .\nBut there's\nmore to go. . .",width/2,height/2);
+	    		fill(0, 133, 173);
+				rect(rl,0,600,400);
+				if (rl<0){
+					rl+=2;
+				}
+				if (rl===0) {
+					fill(255,255,255);
+					textSize(25);
+					text("YES!! I didn't DIE!! Wait a second...\nI'm back to my NORMAL SIZE NOW! YAAY!!\nBut now since it just rained I must watch my step\nbecause of puddles that I could slip on...\n(THE NEXT GAME IS COMING: The mad scientist\nis ANGRY that you survived and is going to\nchase you and YOU will have to avoid puddles....\nCOMING UP NEXT! (wait some time more...)",width/2,height/2);
+					fill(150,150,150);
+					rect(z,0,600,400);
+					if (z<0){
+						z+=2.5;
+					}
+					if (z===0){
+						fill(255,255,255);
+						textSize(50);
+						text("YOU BEAT THE GAME!!\n(Thanks for playing!\nSee you later!!\nAnd the code\nis 4D2D6!)", width/2,height/2);
+						textSize(20);
+						text("The code is proof that you've beat the game",width/2,370);
+					}
+				}
+	    	}
+	    };
+
+	    var madScientist=function(mx,my) {
+	        strokeWeight(1);
+	        fill(255, 255, 255);
+	        rect(mx-59,my-39.5,75,20,5);//right arm
+	        fill(255, 210, 120);
+	        ellipse(mx+10,my-32,22.5,22.5);//right hand
+	        noStroke();
+	        fill(158, 158, 158);
+	        arc(mx-90,my-50,65,70,215,325);//hair
+	        fill(0, 145, 17);
+	        rect(mx-125,my-65,70,65);//hair cover
+	        fill(255, 255, 255);
+	        rect(mx-130,my-39,80,100,10);//body
+	        fill(255, 210, 120);
+	        ellipse(mx-90,my-50,60,60);//face
+	        fill(0, 0, 0);
+	        arc(mx-90,my-40,40,25,0,180);//mouth
+	        fill(255, 210, 120);
+	        rect(mx-110,my-65,40,25);//mouth cover
+	        fill(255, 0, 0);
+	        ellipse(mx-100,my-55,7,14);//left eye
+	        ellipse(mx-70,my-55,7,14);//right eye
+	        stroke(0, 0, 0);
+	        strokeWeight(1);
+	        fill(255, 255, 255);
+	        rect(mx-130,my-25,75,20,5);//left arm
+	        noStroke();
+	        fill(255, 255, 255);
+	        rect(mx-130,my-25,3,30);//left arm cover
+	        fill(232, 232, 232);
+	        ellipse(mx-90,my+30,30,30);//bottom potion
+	        rect(mx-95,my+1,10,20);//top potion
+	        fill(224, 0, 224);
+	        arc(mx-90,my+30,30,30,0,180);//potion
+	        fill(0, 0, 0);
+	        textSize(14);
+	        text("MAD",mx-105,my+30);//mad txt
+	        noStroke();
+	        fill(140, 140, 140);
+	        rect(mx+20,my-22,35,2);
+	        ellipse(mx+55,my-22,10,10);
+	        fill(0, 136, 255);
+	        ellipse(mx-4,my-20,100,30);//machine body
+	        fill(133, 133, 133);
+	        stroke(0, 0, 0);
+	        rect(mx-30,my-25,20,10);
+	        rect(mx-30,my-20,20,0);
+	        rect(mx-30,my-17,20,0);
+	        rect(mx-30,my-23,20,0);
+	        fill(194, 0, 0);
+	        rect(mx+15,my-33,5,26);
+	        fill(0, 0, 0);
+	        rect(mx+20,my-22,10,2);
+	        stroke(0, 0, 0);
+	        fill(255, 210, 120);
+	        ellipse(mx-55,my-14,22.5,22.5);//right hand
+	        fill(43, 43, 43);
+	        rect(mx-120,my+61,20,65);
+	        rect(mx-80,my+61,20,65);
+	    };
+
+	    var rain=function(rx,ry) {
+	        noStroke();
+	        fill(9, 0, 255);
+	        rect(rx,ry,2,10);
+	        ry+=3;
+	        if (ry>height) {
+	            ry=random(-200,0);
+	        }
+	    };
+
+	    var badrain=function(bx,by,b) {
+	    	noStroke();
+	    	fill(9,0,255);
+	    	ellipse(bx,by,b,b);
+	    	if (b<50) {
+	    		b+=1;
+	    	}
+	    }
+
+
+
+	    draw= function() {
+	    	if (keyPressed && keyCode===CONTROL || keyCode===LEFT || keyCode===RIGHT || keyCode===UP || keyCode===DOWN || keyCode===SHIFT) {
+	    		game();
+	    	}
+	    	else{
+	        background(0, d1, d2);
+	        d1-=d1val;
+	        d2-=d2val;
+	        if (d1val<0) {
+	            d1val=d1val*-1;
+	            d2val=d2val*-1;
+	        }
+	        if (d1>196) {
+	            d1val=d1val*-1;
+	            d2val=d2val*-1;
+	        }
+	        noStroke();
+	        fill(0, 145, 17);
+	        rect(0,100,600,300);
+	        fill(122, 77, 0);
+	        triangle(-125,400,725,400,300,100);
+	        fill(255,255,255);
+			textAlign(CENTER,CENTER);
+			text("Press the 'CTRL key' or the ARROW keys to skip the intro",width/2,skip);
+	    	textAlign(LEFT,LEFT);
+	        char(275,250,50,50);
+	        if (frameCount>90) {
+	            madScientist(180,213);
+	            stroke(0, 255, 17);
+	                line(180+55,213-22,180+taserx,213-tasery);
+	                if (frameCount>300 && tasery>-37) {
+	                    taserx+=0.15;
+	                    tasery-=0.15;
+	                }
+	                if (tasery<=-37) {
+	                    fill(0, 255,17);
+	                    ellipse(300,274,explode,explode);
+	                    i++;
+	                    if (i>125 && explode<807) {
+	                        explode+=25;
+	                    }
+	                }
+	                if (explode>=800) {
+	                    continuation=true;
+	                }
+	        }
+	        //This continuation is the continuation after the character gets shrunk in the short beginning clip
+	        if (continuation===true) {
+	            fill(255, 0, 0);
+	            textSize(50);
+	            textAlign(CENTER,CENTER);
+	            text("OW!\nNoo!!\nWhy Meee?\nThe evil scientist\nSHRUNK ME!!!\nIf a single raindrop hits me\nI will die........",width/2,height/2);
+	            if (frameCount>1320) {
+	                rain(rx,ry);ry+=3;if(ry>height){ry=0;}
+	                rain(rx1,ry1);ry1+=3;if(ry1>height){ry1=0;}
+	                rain(rx2,ry2);ry2+=3;if(ry2>height){ry2=0;}
+	                rain(rx3,ry3);ry3+=3;if(ry3>height){ry3=0;}
+	                rain(rx4,ry4);ry4+=3;if(ry4>height){ry4=0;}
+	                rain(rx5,ry5);ry5+=3;if(ry5>height){ry5=0;}
+	                rain(rx6,ry6);ry6+=3;if(ry6>height){ry6=0;}
+	                rain(rx7,ry7);ry7+=3;if(ry7>height){ry7=0;}
+	                rain(rx8,ry8);ry8+=3;if(ry8>height){ry8=0;}
+	                rain(rx9,ry9);ry9+=3;if(ry9>height){ry9=0;}
+	                rain(rx10,ry10);ry10+=3;if(ry10>height){ry10=0;}
+	                rain(rx11,ry11);ry11+=3;if(ry11>height){ry11=0;}
+	                rain(rx12,ry12);ry12+=3;if(ry12>height){ry12=0;}
+	                rain(rx13,ry13);ry13+=3;if(ry13>height){ry13=0;}
+	                rain(rx14,ry14);ry14+=3;if(ry14>height){ry14=0;}
+	                rain(rx15,ry15);ry15+=3;if(ry15>height){ry15=0;}
+	                rain(rx16,ry16);ry16+=3;if(ry16>height){ry16=0;}
+	                rain(rx17,ry17);ry17+=3;if(ry17>height){ry17=0;}
+	                rain(rx18,ry18);ry18+=3;if(ry18>height){ry18=0;}
+	                rain(rx19,ry19);ry19+=3;if(ry19>height){ry19=0;}
+	                rain(rx20,ry20);ry20+=3;if(ry20>height){ry20=0;}
+	                rain(rx21,ry21);ry21+=3;if(ry21>height){ry21=0;}
+	                rain(rx22,ry22);ry22+=3;if(ry22>height){ry22=0;}
+	                rain(rx23,ry23);ry23+=3;if(ry23>height){ry23=0;}
+	                rain(rx24,ry24);ry24+=3;if(ry24>height){ry24=0;}
+	                rain(rx25,ry25);ry25+=3;if(ry25>height){ry25=0;}
+	                rain(rx26,ry26);ry26+=3;if(ry26>height){ry26=0;}
+	                rain(rx27,ry27);ry27+=3;if(ry27>height){ry27=0;}
+	                rain(rx28,ry28);ry28+=3;if(ry28>height){ry28=0;}
+	                rain(rx29,ry29);ry29+=3;if(ry29>height){ry29=0;}
+	                rain(rx30,ry30);ry30+=3;if(ry30>height){ry30=0;}
+	                if (frameCount>1900) {
+	                    game();
+	                }
+	            }
+	        }
+	        }
+	    };
+      }
+      }
+  var canvas = document.getElementById("mycanvas");
+  var processingInstance = new Processing(canvas, programCode);
+  </script>
+</body>
+
+</html>

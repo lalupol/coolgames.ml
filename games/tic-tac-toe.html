@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tic-Tac-Toe</title>
+	<link rel="icon" type="image/png" href="//ssl.gstatic.com/classroom/favicon.png">
+	<link href="/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+	<!--navigation-->
+	<div class="navbar">
+		<b>
+      <a href="/index.html" class="left">
+      <div class="home_icon"><img src="/img/home-icon.png" width="20" height="20"></img> ‍ HOME</div></a>
+      <a href="/graphics" class="right" id="loadNoAnim">Graphics</a>
+      <a href="/games" class="right">Games</a>
+      <b>
+  </div>
+
+  <!--stop onload animations-->
+  <script src="no-loading-animation.js"></script>
+
+  <br><center><canvas id="mycanvas"></canvas></center>
+
+  <script src="https://cdn.jsdelivr.net/processing.js/1.4.8/processing.min.js"></script>
+  <script>
+    var programCode = function(processingInstance) {
+    with (processingInstance) {
+      size(400,400);
+      var player1=true;
+var payer2=false;
+var scene="home";
+var c=0;
+var win=false;
+var play=false;
+var playerturn="Player 1 X";
+var player=true;
+var zoom=0;
+var shade=0;
+
+var xoccupied1=false;
+var xoccupied2=false;
+var xoccupied3=false;
+var xoccupied4=false;
+var xoccupied5=false;
+var xoccupied6=false;
+var xoccupied7=false;
+var xoccupied8=false;
+var xoccupied9=false;
+//--------------------
+var ooccupied1=false;
+var ooccupied2=false;
+var ooccupied3=false;
+var ooccupied4=false;
+var ooccupied5=false;
+var ooccupied6=false;
+var ooccupied7=false;
+var ooccupied8=false;
+var ooccupied9=false;
+
+
+var x=function(x,y){
+    stroke(255, 0, 0);
+    strokeWeight(10);
+    line(x-30,y-30,x+30,y+30);
+    line(x-30,y+30,x+30,y-30);
+};
+
+var o=function(x,y){
+    noFill();
+    stroke(0, 38, 255);
+    ellipse(x,y,60,60);
+};
+
+
+draw= function() {
+    if(scene==="home"){
+        noStroke();
+        background(217, 144, 95);
+        textSize(50);
+        textAlign(CENTER,CENTER);
+        fill(255, 255, 255);
+        text("TWO PLAYER\nTic-Tac-Toe!",200,100);
+        fill(194, 126, 81);
+        rect(125,220,150,75,10);
+        fill(c, c, c);
+        text("Play!",200,253);
+        if(mouseX>125 && mouseX<275 && mouseY>220 && mouseY<295){
+            cursor(HAND);
+            c=255;
+        }
+        else{
+            cursor(ARROW);
+            c=0;
+        }
+    }
+    if(scene==="play"){
+        cursor(ARROW);
+        background(217, 144, 95);
+        if(play===false){
+            noStroke();
+            fill(204, 204, 204,150);
+            rect(25,75,350,250,10);
+            textSize(40);
+            fill(255, 255, 255);
+            text("INTRUCTIONS",200,120);
+            textSize(25);
+            text("X will go first. You can place\nyour X or O by clicking the\nsquare you want to put it\non. Have FUN!",200,200);
+            textSize(15);
+            text("Click anywhere to begin",200,300);
+        }
+        if(play===true){
+            if(playerturn==="Player 1 X"){
+                player=true;
+            }
+            else if(playerturn==="Player 2 O"){
+                player=false;
+            }
+            stroke(0, 0, 0);
+            strokeWeight(1.5);
+            line(132,50,132,350);
+            line(264,50,264,350);
+            line(50,132,350,132);
+            line(50,264,350,264);
+            noStroke();
+            fill(255, 255, 255);
+            textSize(20);
+            text("TURN: "+playerturn,200,20);
+            if(player===true || player===false){
+                // (Bottom,Left) = (0,0) | (Top, Right) = (3,3)
+                if(mouseX>40 && mouseX<130 && mouseY>30 && mouseY<130){ //(1,3)
+                    cursor(HAND);
+                }
+                else if(mouseX>40 && mouseX<130 && mouseY>132 && mouseY<260){ //(1,2)
+                    cursor(HAND);
+                }
+                else if(mouseX>40 && mouseX<130 && mouseY>262 && mouseY<355){ //(1,1)
+                    cursor(HAND);
+                }
+                else if(mouseX>132 && mouseX<260 && mouseY>30 && mouseY<130){ //(2,3)
+                    cursor(HAND);
+                }
+                else if(mouseX>132 && mouseX<260 && mouseY>132 && mouseY<270){ //(2,2)
+                    cursor(HAND);
+                }
+                else if(mouseX>132 && mouseX<260 && mouseY>262 && mouseY<355){ //(2,1)
+                    cursor(HAND);
+                }
+                else if(mouseX>265 && mouseX<355 && mouseY>30 && mouseY<130){ //(3,3)
+                    cursor(HAND);
+                }
+                else if(mouseX>265 && mouseX<355 && mouseY>132 && mouseY<270){ //(3,2)
+                    cursor(HAND);
+                }
+                else if(mouseX>265 && mouseX<355 && mouseY>262 && mouseY<355){ //(3,1)
+                    cursor(HAND);
+                }
+                else{
+                    cursor(ARROW);
+                }
+            }
+            if(xoccupied1===true){
+                x(90,90);
+            }
+            if(xoccupied2===true){
+                x(75,200);
+            }
+            if(xoccupied3===true){
+                x(85,310);
+            }
+            if(xoccupied4===true){
+                x(200,90);
+            }
+            if(xoccupied5===true){
+                x(200,200);
+            }
+            if(xoccupied6===true){
+                x(200,310);
+            }
+            if(xoccupied7===true){
+                x(310,90);
+            }
+            if(xoccupied8===true){
+                x(310,200);
+            }
+            if(xoccupied9===true){
+                x(310,310);
+            }
+            
+            //-----------O---------|||||||||||||||||||||||||||||||||||||
+            
+            if(ooccupied1===true){
+                o(90,90);
+            }
+            if(ooccupied2===true){
+                o(75,200);
+            }
+            if(ooccupied3===true){
+                o(85,310);
+            }
+            if(ooccupied4===true){
+                o(200,90);
+            }
+            if(ooccupied5===true){
+                o(200,200);
+            }
+            if(ooccupied6===true){
+                o(200,310);
+            }
+            if(ooccupied7===true){
+                o(310,90);
+            }
+            if(ooccupied8===true){
+                o(310,200);
+            }
+            if(ooccupied9===true){
+                o(310,310);
+            }
+        }
+        noStroke();
+        fill(0, 0, 0,shade);
+        rect(0,0,width,height);
+        
+        if(ooccupied1===true && ooccupied2===true && ooccupied3===true){ //x=1
+            win=true;
+            cursor(ARROW);
+            fill(255, 255, 255);
+            textSize(zoom);
+            text("Player 2 O\nWON!",200,200);
+            if(zoom<75){
+                zoom+=1.5;
+            }
+        }
+        if(ooccupied4===true && ooccupied5===true && ooccupied6===true){ //x=2
+            win=true;
+            cursor(ARROW);
+            fill(255, 255, 255);
+            textSize(zoom);
+            text("Player 2 O\nWON!",200,200);
+            if(zoom<75){
+                zoom+=1.5;
+            }
+        }
+        if(ooccupied7===true && ooccupied8===true && ooccupied9===true){ //x=3
+            win=true;
+            cursor(ARROW);
+            fill(255, 255, 255);
+            textSize(zoom);
+            text("Player 2 O\nWON!",200,200);
+            if(zoom<75){
+                zoom+=1.5;
+            }
+        }
+        if(ooccupied1===true && ooccupied4===true && ooccupied7===true){ //y=1
+            win=true;
+            cursor(ARROW);
+            fill(255, 255, 255);
+            textSize(zoom);
+            text("Player 2 O\nWON!",200,200);
+            if(zoom<75){
+                zoom+=1.5;
+            }
+        }
+        if(ooccupied2===true && ooccupied5===true && ooccupied8===true){ //y=2
+            win=true;
+            cursor(ARROW);
+            fill(255, 255, 255);
+            textSize(zoom);
+            text("Player 2 O\nWON!",200,200);
+            if(zoom<75){
+                zoom+=1.5;
+            }
+        }
+        if(ooccupied3===true && ooccupied6===true && ooccupied9===true){ //y=3
+            win=true;
+            cursor(ARROW);
+            fill(255, 255, 255);
+            textSize(zoom);
+            text("Player 2 O\nWON!",200,200);
+            if(zoom<75){
+                zoom+=1.5;
+            }
+        }
+        if(ooccupied1===true && ooccupied5===true && ooccupied9===true){ //TL-->BR
+            win=true;
+            cursor(ARROW);
+            fill(255, 255, 255);
+            textSize(zoom);
+            text("Player 2 O\nWON!",200,200);
+            if(zoom<75){
+                zoom+=1.5;
+            }
+        }
+        if(ooccupied3===true && ooccupied5===true && ooccupied7===true){ //BL-->TR
+            win=true;
+            cursor(ARROW);
+            fill(255, 255, 255);
+            textSize(zoom);
+            text("Player 2 O\nWON!",200,200);
+            if(zoom<75){
+                zoom+=1.5;
+            }
+        }
+        
+        //----------------XXXXXXXXXXXXX------------------||||||||||||||||
+        
+        if(xoccupied1===true && xoccupied2===true && xoccupied3===true){ //x=1
+            win=true;
+            cursor(ARROW);
+            fill(255, 255, 255);
+            textSize(zoom);
+            text("Player 1 X\nWON!",200,200);
+            if(zoom<75){
+                zoom+=1.5;
+            }
+        }
+        if(xoccupied4===true && xoccupied5===true && xoccupied6===true){ //x=2
+            win=true;
+            cursor(ARROW);
+            fill(255, 255, 255);
+            textSize(zoom);
+            text("Player 1 X\nWON!",200,200);
+            if(zoom<75){
+                zoom+=1.5;
+            }
+        }
+        if(xoccupied7===true && xoccupied8===true && xoccupied9===true){ //x=3
+            win=true;
+            cursor(ARROW);
+            fill(255, 255, 255);
+            textSize(zoom);
+            text("Player 1 X\nWON!",200,200);
+            if(zoom<75){
+                zoom+=1.5;
+            }
+        }
+        if(xoccupied1===true && xoccupied4===true && xoccupied7===true){ //y=1
+            win=true;
+            cursor(ARROW);
+            fill(255, 255, 255);
+            textSize(zoom);
+            text("Player 1 X\nWON!",200,200);
+            if(zoom<75){
+                zoom+=1.5;
+            }
+        }
+        if(xoccupied2===true && xoccupied5===true && xoccupied8===true){ //y=2
+            win=true;
+            cursor(ARROW);
+            fill(255, 255, 255);
+            textSize(zoom);
+            text("Player 1 X\nWON!",200,200);
+            if(zoom<75){
+                zoom+=1.5;
+            }
+        }
+        if(xoccupied3===true && xoccupied6===true && xoccupied9===true){ //y=3
+            win=true;
+            cursor(ARROW);
+            fill(255, 255, 255);
+            textSize(zoom);
+            text("Player 1 X\nWON!",200,200);
+            if(zoom<75){
+                zoom+=1.5;
+            }
+        }
+        if(xoccupied1===true && xoccupied5===true && xoccupied9===true){ //TL-->BR
+            win=true;
+            cursor(ARROW);
+            fill(255, 255, 255);
+            textSize(zoom);
+            text("Player 1 X\nWON!",200,200);
+            if(zoom<75){
+                zoom+=1.5;
+            }
+        }
+        if(xoccupied3===true && xoccupied5===true && xoccupied7===true){ //BL-->TR
+            win=true;
+            cursor(ARROW);
+            fill(255, 255, 255);
+            textSize(zoom);
+            text("Player 1 X\nWON!",200,200);
+            if(zoom<75){
+                zoom+=1.5;
+            }
+        }
+        //-----------------TIE-----------------|||||||||||||
+        if((xoccupied1===true || ooccupied1===true) && (xoccupied2===true || ooccupied2===true) && (xoccupied3===true || ooccupied3===true) && (xoccupied4===true || ooccupied4===true) && (xoccupied5===true || ooccupied5===true) && (xoccupied6===true || ooccupied6===true) && (xoccupied7===true || ooccupied7===true) && (xoccupied8===true || ooccupied8===true) && (xoccupied9===true || ooccupied9===true) && win===false){
+            cursor(ARROW);
+            fill(255, 255, 255);
+            textSize(zoom);
+            text("TIE!",200,200);
+            if(zoom<75){
+                zoom+=1.5;
+            }
+        }
+        
+        
+        
+        // Fancy Shading :)
+        if(zoom>74 && shade<250){
+                shade++;
+            }
+    }
+    
+    
+    
+    
+    
+    mouseClicked=function(){
+        if(scene==="home" && mouseX>125 && mouseX<275 && mouseY>220 && mouseY<295){
+            scene="play";
+        }
+        else if(scene==="play" && play===false){
+            play=true;
+        }
+        else if(player===true){
+            if(mouseX>40 && mouseX<130 && mouseY>30 && mouseY<130 && xoccupied1===false && ooccupied1===false){ //(1,3)
+                xoccupied1=true;
+                playerturn="Player 2 O";
+            }
+            else if(mouseX>40 && mouseX<130 && mouseY>132 && mouseY<260 && xoccupied2===false && ooccupied2===false){ //(1,2)
+                xoccupied2=true;
+                playerturn="Player 2 O";
+            }
+            else if(mouseX>40 && mouseX<130 && mouseY>262 && mouseY<355 && xoccupied3===false && ooccupied3===false){ //(1,1)
+                xoccupied3=true;
+                playerturn="Player 2 O";
+            }
+            else if(mouseX>132 && mouseX<260 && mouseY>30 && mouseY<130 && xoccupied4===false && ooccupied4===false){ //(2,3)
+                xoccupied4=true;
+                playerturn="Player 2 O";
+            }
+            else if(mouseX>132 && mouseX<260 && mouseY>132 && mouseY<270 && xoccupied5===false && ooccupied5===false){ //(2,2)
+                xoccupied5=true;
+                playerturn="Player 2 O";
+            }
+            else if(mouseX>132 && mouseX<260 && mouseY>262 && mouseY<355 && xoccupied6===false && ooccupied6===false){ //(2,1)
+                xoccupied6=true;
+                playerturn="Player 2 O";
+            }
+            else if(mouseX>265 && mouseX<355 && mouseY>30 && mouseY<130 && xoccupied7===false && ooccupied7===false){ //(3,3)
+                xoccupied7=true;
+                playerturn="Player 2 O";
+            }
+            else if(mouseX>265 && mouseX<355 && mouseY>132 && mouseY<270 && xoccupied8===false && ooccupied8===false){ //(3,2)
+                xoccupied8=true;
+                playerturn="Player 2 O";
+            }
+            else if(mouseX>265 && mouseX<355 && mouseY>262 && mouseY<355 && xoccupied9===false && ooccupied9===false){ //(3,1)
+                xoccupied9=true;
+                playerturn="Player 2 O";
+            }
+        }
+            
+            //-------------------OOOOOOOOOO------------------------------|||||||||
+            else if(player===false){
+            if(mouseX>40 && mouseX<130 && mouseY>30 && mouseY<130 && xoccupied1===false && ooccupied1===false){ //(1,3)
+                ooccupied1=true;
+                playerturn="Player 1 X";
+            }
+            else if(mouseX>40 && mouseX<130 && mouseY>132 && mouseY<260 && xoccupied2===false && ooccupied2===false){ //(1,2)
+                ooccupied2=true;
+                playerturn="Player 1 X";
+            }
+            else if(mouseX>40 && mouseX<130 && mouseY>262 && mouseY<355 && xoccupied3===false && ooccupied3===false){ //(1,1)
+                ooccupied3=true;
+                playerturn="Player 1 X";
+            }
+            else if(mouseX>132 && mouseX<260 && mouseY>30 && mouseY<130 && xoccupied4===false && ooccupied4===false){ //(2,3)
+                ooccupied4=true;
+                playerturn="Player 1 X";
+            }
+            else if(mouseX>132 && mouseX<260 && mouseY>132 && mouseY<270 && xoccupied5===false && ooccupied5===false){ //(2,2)
+                ooccupied5=true;
+                playerturn="Player 1 X";
+            }
+            else if(mouseX>132 && mouseX<260 && mouseY>262 && mouseY<355 && xoccupied6===false && ooccupied6===false){ //(2,1)
+                ooccupied6=true;
+                playerturn="Player 1 X";
+            }
+            else if(mouseX>265 && mouseX<355 && mouseY>30 && mouseY<130 && xoccupied7===false && ooccupied7===false){ //(3,3)
+                ooccupied7=true;
+                playerturn="Player 1 X";
+            }
+            else if(mouseX>265 && mouseX<355 && mouseY>132 && mouseY<270 && xoccupied8===false && ooccupied8===false){ //(3,2)
+                ooccupied8=true;
+                playerturn="Player 1 X";
+            }
+            else if(mouseX>265 && mouseX<355 && mouseY>262 && mouseY<355 && xoccupied9===false && ooccupied9===false){ //(3,1)
+                ooccupied9=true;
+                playerturn="Player 1 X";
+            }
+        }
+    };
+};
+
+
+  }
+  }
+
+  var canvas = document.getElementById("mycanvas");
+  var processingInstance = new Processing(canvas, programCode);
+  </script>
+</body>
+
+</html>
