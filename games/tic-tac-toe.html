@@ -31,7 +31,8 @@
 var payer2=false;
 var scene="home";
 var c=0;
-var win=false;
+var winx=false;
+var wino=false;
 var play=false;
 var playerturn="Player 1 X";
 var player=true;
@@ -221,168 +222,75 @@ draw= function() {
         fill(0, 0, 0,shade);
         rect(0,0,width,height);
         
-        if(ooccupied1===true && ooccupied2===true && ooccupied3===true && win===false){ //x=1
-            win=true;
-            cursor(ARROW);
-            fill(255, 255, 255);
-            textSize(zoom);
-            text("Player 2 O\nWON!",200,200);
-            if(zoom<75){
-                zoom+=1.5;
-            }
+        if(ooccupied1===true && ooccupied2===true && ooccupied3===true && wino===false && winx===false){ //x=1
+            wino=true;
         }
-        if(ooccupied4===true && ooccupied5===true && ooccupied6===true && win===false){ //x=2
-            win=true;
-            cursor(ARROW);
-            fill(255, 255, 255);
-            textSize(zoom);
-            text("Player 2 O\nWON!",200,200);
-            if(zoom<75){
-                zoom+=1.5;
-            }
+        if(ooccupied4===true && ooccupied5===true && ooccupied6===true && wino===false && winx===false){ //x=2
+            wino=true;
         }
-        if(ooccupied7===true && ooccupied8===true && ooccupied9===true && win===false){ //x=3
-            win=true;
-            cursor(ARROW);
-            fill(255, 255, 255);
-            textSize(zoom);
-            text("Player 2 O\nWON!",200,200);
-            if(zoom<75){
-                zoom+=1.5;
-            }
+        if(ooccupied7===true && ooccupied8===true && ooccupied9===true && wino===false && winx===false){ //x=3
+            wino=true;
         }
-        if(ooccupied1===true && ooccupied4===true && ooccupied7===true && win===false){ //y=1
-            win=true;
-            cursor(ARROW);
-            fill(255, 255, 255);
-            textSize(zoom);
-            text("Player 2 O\nWON!",200,200);
-            if(zoom<75){
-                zoom+=1.5;
-            }
+        if(ooccupied1===true && ooccupied4===true && ooccupied7===true && wino===false && winx===false){ //y=1
+            wino=true;
         }
-        if(ooccupied2===true && ooccupied5===true && ooccupied8===true && win===false){ //y=2
-            win=true;
-            cursor(ARROW);
-            fill(255, 255, 255);
-            textSize(zoom);
-            text("Player 2 O\nWON!",200,200);
-            if(zoom<75){
-                zoom+=1.5;
-            }
+        if(ooccupied2===true && ooccupied5===true && ooccupied8===true && wino===false && winx===false){ //y=2
+            wino=true;
         }
-        if(ooccupied3===true && ooccupied6===true && ooccupied9===true && win===false){ //y=3
-            win=true;
-            cursor(ARROW);
-            fill(255, 255, 255);
-            textSize(zoom);
-            text("Player 2 O\nWON!",200,200);
-            if(zoom<75){
-                zoom+=1.5;
-            }
+        if(ooccupied3===true && ooccupied6===true && ooccupied9===true && wino===false && winx===false){ //y=3
+            wino=true;
         }
-        if(ooccupied1===true && ooccupied5===true && ooccupied9===true && win===false){ //TL-->BR
-            win=true;
-            cursor(ARROW);
-            fill(255, 255, 255);
-            textSize(zoom);
-            text("Player 2 O\nWON!",200,200);
-            if(zoom<75){
-                zoom+=1.5;
-            }
+        if(ooccupied1===true && ooccupied5===true && ooccupied9===true && wino===false && winx===false){ //TL-->BR
+            wino=true;
         }
-        if(ooccupied3===true && ooccupied5===true && ooccupied7===true && win===false){ //BL-->TR
-            win=true;
-            cursor(ARROW);
-            fill(255, 255, 255);
-            textSize(zoom);
-            text("Player 2 O\nWON!",200,200);
-            if(zoom<75){
-                zoom+=1.5;
-            }
+        if(ooccupied3===true && ooccupied5===true && ooccupied7===true && wino===false && winx===false){ //BL-->TR
+            wino=true;
         }
         
         //----------------XXXXXXXXXXXXX------------------||||||||||||||||
         
-        if(xoccupied1===true && xoccupied2===true && xoccupied3===true && win===false){ //x=1
-            win=true;
-            cursor(ARROW);
-            fill(255, 255, 255);
-            textSize(zoom);
-            text("Player 1 X\nWON!",200,200);
-            if(zoom<75){
-                zoom+=1.5;
-            }
+        if(xoccupied1===true && xoccupied2===true && xoccupied3===true && winx===false && wino===false){ //x=1
+            winx=true;
         }
-        if(xoccupied4===true && xoccupied5===true && xoccupied6===true && win===false){ //x=2
-            win=true;
-            cursor(ARROW);
-            fill(255, 255, 255);
-            textSize(zoom);
-            text("Player 1 X\nWON!",200,200);
-            if(zoom<75){
-                zoom+=1.5;
-            }
+        if(xoccupied4===true && xoccupied5===true && xoccupied6===true && winx===false && wino===false){ //x=2
+            winx=true;
         }
-        if(xoccupied7===true && xoccupied8===true && xoccupied9===true && win===false){ //x=3
-            win=true;
-            cursor(ARROW);
-            fill(255, 255, 255);
-            textSize(zoom);
-            text("Player 1 X\nWON!",200,200);
-            if(zoom<75){
-                zoom+=1.5;
-            }
+        if(xoccupied7===true && xoccupied8===true && xoccupied9===true && winx===false && wino===false){ //x=3
+            winx=true;
         }
-        if(xoccupied1===true && xoccupied4===true && xoccupied7===true && win===false){ //y=1
-            win=true;
-            cursor(ARROW);
-            fill(255, 255, 255);
-            textSize(zoom);
-            text("Player 1 X\nWON!",200,200);
-            if(zoom<75){
-                zoom+=1.5;
-            }
+        if(xoccupied1===true && xoccupied4===true && xoccupied7===true && winx===false && wino===false){ //y=1
+            winx=true;
         }
-        if(xoccupied2===true && xoccupied5===true && xoccupied8===true && win===false){ //y=2
-            win=true;
-            cursor(ARROW);
-            fill(255, 255, 255);
-            textSize(zoom);
-            text("Player 1 X\nWON!",200,200);
-            if(zoom<75){
-                zoom+=1.5;
-            }
+        if(xoccupied2===true && xoccupied5===true && xoccupied8===true && winx===false && wino===false){ //y=2
+            winx=true;
         }
-        if(xoccupied3===true && xoccupied6===true && xoccupied9===true && win===false){ //y=3
-            win=true;
-            cursor(ARROW);
-            fill(255, 255, 255);
-            textSize(zoom);
-            text("Player 1 X\nWON!",200,200);
-            if(zoom<75){
-                zoom+=1.5;
-            }
+        if(xoccupied3===true && xoccupied6===true && xoccupied9===true && winx===false && wino===false){ //y=3
+            winx=true;
         }
-        if(xoccupied1===true && xoccupied5===true && xoccupied9===true && win===false){ //TL-->BR
-            win=true;
-            cursor(ARROW);
-            fill(255, 255, 255);
-            textSize(zoom);
-            text("Player 1 X\nWON!",200,200);
-            if(zoom<75){
-                zoom+=1.5;
-            }
+        if(xoccupied1===true && xoccupied5===true && xoccupied9===true && winx===false && wino===false){ //TL-->BR
+            winx=true;
         }
-        if(xoccupied3===true && xoccupied5===true && xoccupied7===true && win===false){ //BL-->TR
-            win=true;
-            cursor(ARROW);
-            fill(255, 255, 255);
-            textSize(zoom);
-            text("Player 1 X\nWON!",200,200);
-            if(zoom<75){
-                zoom+=1.5;
-            }
+        if(xoccupied3===true && xoccupied5===true && xoccupied7===true && winx===false && wino===false){ //BL-->TR
+            winx=true;
+        }
+        if(winx===true){
+          wino=false;
+          cursor(ARROW);
+          fill(255, 255, 255);
+          textSize(zoom);
+          text("Player 1 X\nWON!",200,200);
+          if(zoom<75){
+            zoom+=1.5;
+          }
+        }
+        if(wino===true) {
+          cursor(ARROW);
+          fill(255, 255, 255);
+          textSize(zoom);
+          text("Player 2 O\nWON!",200,200);
+          if(zoom<75){
+            zoom+=1.5;
+          }
         }
         //-----------------TIE-----------------|||||||||||||
         if((xoccupied1===true || ooccupied1===true) && (xoccupied2===true || ooccupied2===true) && (xoccupied3===true || ooccupied3===true) && (xoccupied4===true || ooccupied4===true) && (xoccupied5===true || ooccupied5===true) && (xoccupied6===true || ooccupied6===true) && (xoccupied7===true || ooccupied7===true) && (xoccupied8===true || ooccupied8===true) && (xoccupied9===true || ooccupied9===true) && win===false){
