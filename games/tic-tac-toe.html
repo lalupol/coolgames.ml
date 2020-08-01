@@ -221,7 +221,7 @@ draw= function() {
         fill(0, 0, 0,shade);
         rect(0,0,width,height);
         
-        if(ooccupied1===true && ooccupied2===true && ooccupied3===true){ //x=1
+        if(ooccupied1===true && ooccupied2===true && ooccupied3===true && win===false){ //x=1
             win=true;
             cursor(ARROW);
             fill(255, 255, 255);
@@ -231,7 +231,7 @@ draw= function() {
                 zoom+=1.5;
             }
         }
-        if(ooccupied4===true && ooccupied5===true && ooccupied6===true){ //x=2
+        if(ooccupied4===true && ooccupied5===true && ooccupied6===true && win===false){ //x=2
             win=true;
             cursor(ARROW);
             fill(255, 255, 255);
@@ -241,7 +241,7 @@ draw= function() {
                 zoom+=1.5;
             }
         }
-        if(ooccupied7===true && ooccupied8===true && ooccupied9===true){ //x=3
+        if(ooccupied7===true && ooccupied8===true && ooccupied9===true && win===false){ //x=3
             win=true;
             cursor(ARROW);
             fill(255, 255, 255);
@@ -251,7 +251,7 @@ draw= function() {
                 zoom+=1.5;
             }
         }
-        if(ooccupied1===true && ooccupied4===true && ooccupied7===true){ //y=1
+        if(ooccupied1===true && ooccupied4===true && ooccupied7===true && win===false){ //y=1
             win=true;
             cursor(ARROW);
             fill(255, 255, 255);
@@ -261,7 +261,7 @@ draw= function() {
                 zoom+=1.5;
             }
         }
-        if(ooccupied2===true && ooccupied5===true && ooccupied8===true){ //y=2
+        if(ooccupied2===true && ooccupied5===true && ooccupied8===true && win===false){ //y=2
             win=true;
             cursor(ARROW);
             fill(255, 255, 255);
@@ -271,7 +271,7 @@ draw= function() {
                 zoom+=1.5;
             }
         }
-        if(ooccupied3===true && ooccupied6===true && ooccupied9===true){ //y=3
+        if(ooccupied3===true && ooccupied6===true && ooccupied9===true && win===false){ //y=3
             win=true;
             cursor(ARROW);
             fill(255, 255, 255);
@@ -281,7 +281,7 @@ draw= function() {
                 zoom+=1.5;
             }
         }
-        if(ooccupied1===true && ooccupied5===true && ooccupied9===true){ //TL-->BR
+        if(ooccupied1===true && ooccupied5===true && ooccupied9===true && win===false){ //TL-->BR
             win=true;
             cursor(ARROW);
             fill(255, 255, 255);
@@ -291,7 +291,7 @@ draw= function() {
                 zoom+=1.5;
             }
         }
-        if(ooccupied3===true && ooccupied5===true && ooccupied7===true){ //BL-->TR
+        if(ooccupied3===true && ooccupied5===true && ooccupied7===true && win===false){ //BL-->TR
             win=true;
             cursor(ARROW);
             fill(255, 255, 255);
@@ -304,7 +304,7 @@ draw= function() {
         
         //----------------XXXXXXXXXXXXX------------------||||||||||||||||
         
-        if(xoccupied1===true && xoccupied2===true && xoccupied3===true){ //x=1
+        if(xoccupied1===true && xoccupied2===true && xoccupied3===true && win===false){ //x=1
             win=true;
             cursor(ARROW);
             fill(255, 255, 255);
@@ -314,7 +314,7 @@ draw= function() {
                 zoom+=1.5;
             }
         }
-        if(xoccupied4===true && xoccupied5===true && xoccupied6===true){ //x=2
+        if(xoccupied4===true && xoccupied5===true && xoccupied6===true && win===false){ //x=2
             win=true;
             cursor(ARROW);
             fill(255, 255, 255);
@@ -324,7 +324,7 @@ draw= function() {
                 zoom+=1.5;
             }
         }
-        if(xoccupied7===true && xoccupied8===true && xoccupied9===true){ //x=3
+        if(xoccupied7===true && xoccupied8===true && xoccupied9===true && win===false){ //x=3
             win=true;
             cursor(ARROW);
             fill(255, 255, 255);
@@ -334,7 +334,7 @@ draw= function() {
                 zoom+=1.5;
             }
         }
-        if(xoccupied1===true && xoccupied4===true && xoccupied7===true){ //y=1
+        if(xoccupied1===true && xoccupied4===true && xoccupied7===true && win===false){ //y=1
             win=true;
             cursor(ARROW);
             fill(255, 255, 255);
@@ -344,7 +344,7 @@ draw= function() {
                 zoom+=1.5;
             }
         }
-        if(xoccupied2===true && xoccupied5===true && xoccupied8===true){ //y=2
+        if(xoccupied2===true && xoccupied5===true && xoccupied8===true && win===false){ //y=2
             win=true;
             cursor(ARROW);
             fill(255, 255, 255);
@@ -354,7 +354,7 @@ draw= function() {
                 zoom+=1.5;
             }
         }
-        if(xoccupied3===true && xoccupied6===true && xoccupied9===true){ //y=3
+        if(xoccupied3===true && xoccupied6===true && xoccupied9===true && win===false){ //y=3
             win=true;
             cursor(ARROW);
             fill(255, 255, 255);
@@ -364,7 +364,7 @@ draw= function() {
                 zoom+=1.5;
             }
         }
-        if(xoccupied1===true && xoccupied5===true && xoccupied9===true){ //TL-->BR
+        if(xoccupied1===true && xoccupied5===true && xoccupied9===true && win===false){ //TL-->BR
             win=true;
             cursor(ARROW);
             fill(255, 255, 255);
@@ -374,7 +374,7 @@ draw= function() {
                 zoom+=1.5;
             }
         }
-        if(xoccupied3===true && xoccupied5===true && xoccupied7===true){ //BL-->TR
+        if(xoccupied3===true && xoccupied5===true && xoccupied7===true && win===false){ //BL-->TR
             win=true;
             cursor(ARROW);
             fill(255, 255, 255);
