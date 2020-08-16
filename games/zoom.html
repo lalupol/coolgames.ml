@@ -34,7 +34,7 @@
       rect(0,1/3*height,width,height/3);
       fill(51, 0, 255);
       rect(0,2/3*height-1,width,height/3+1);
-      var oneFiveEight="on zoomgame.tk/adv1.html!";
+      var oneFiveEight="2749";
       var nothingYet=538298;
       var lives=1;
       var i=0;
@@ -367,7 +367,7 @@
 					}
 			  	}
 			  	if (playing===true && timer===true) {
-			  		instructions=instructions+stop1;
+			  		instructions+=stop1;
 			  		if (keyPressed && keyCode===CONTROL && instructions>5) {
 			  			stop1=0.04;
 			  			if (instructions>8) {
@@ -381,7 +381,7 @@
 			  			}
 			  		}
 			  		if (keyPressed && keyCode===ENTER && instructions>30) {
-			  			stop1=0.06;
+			  			stop1=0.08;
 			  			if (instructions>33) {
 			  				sd3=10000;
 			  			}
