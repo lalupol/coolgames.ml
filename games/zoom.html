@@ -36,6 +36,8 @@
       rect(0,2/3*height-1,width,height/3+1);
       var oneFiveEight="2749";
       var nothingYet=538298;
+      var rr=0;
+      var rg=0;
       var lives=1;
       var i=0;
       var r=255;
@@ -51,9 +53,10 @@
       var pw=50;
       var ph=50;
       var instruct=499.5;
-      var instructions=0;
+      var instructions=160;
       var lava=false;
       var timer=false;
+      var home=true;
       var block;
       var ly1=-150;
       var ly2=-150;
@@ -98,39 +101,63 @@
       var sd7=500;
       var sd8=500;
       var sd9=500
-      
-      	  //homepage
-		  while (i<333) {
-			fill(r,g,b);
-			rect(0,i,width,1);
-			i++;
-			g=g+0.09909909909;
-			r=r-0.22222222222;
-		  }
-		  while (i>320.9 && i<999) {
-			fill(r,g,b);
-			rect(0,i,width,1);
-			i++;
-			g=g-0.09909909909;
-			r=r-0.39039039039;
-		  }
-		  textAlign(CENTER,CENTER);
-		  fill(0,0,0);
-		  textSize(200);
-		  text("ZOOM",999/2,700/2-150);
-		  fill(0, 157, 168);
-		  //play button
-		  rect(999/2-100,700/2+50,200,100,10);
-		  fill(255, 255, 255);
-		  textSize(75);
-		  text("Play!",999/2,700/2+95);
+
+      while (i<333) {
+        fill(r,g,b);
+        rect(0,i,width,1);
+        i++;
+        g+=0.09909909909;
+        r-=0.22222222222;
+      }
+      while (i>320.9 && i<999) {
+        fill(r,g,b);
+        rect(0,i,width,1);
+        i++;
+        g-=0.09909909909;
+        r-=0.39039039039;
+      }
+      var homeGradient = get(0,0,999,700);
+
 		  draw=function() {
-			  mouseClicked=function() {
-				if (mouseX>399.5 && mouseX<599.5 && mouseY>400 && mouseY<500) {
-					playing=true;
-				}
-			  };
+        mouseClicked=function(){
+          if (mouseX>399.5 && mouseX<599.5 && mouseY>400 && mouseY<500 && home===true) {
+            playing=true;
+            home=false;
+          }
+          if(mouseX>width/2-120 && mouseX<width/2+120 && mouseY>2*height/3-50 && mouseY<2*height/3+50 && lost===true && instructions<=19.5){
+            location.reload();
+          }
+          else if(mouseX>width/2-120 && mouseX<width/2+120 && mouseY>height/9-50 && mouseY<height/9+50 && lost===true && instructions>19.5){
+            location.reload();
+          }
+        };
+        if(home===true){
+          background(0,0,0,0);
+          image(homeGradient,0,0,999,700);
+          //homepage
+          textAlign(CENTER,CENTER);
+          textSize(200);
+          fill(0,0,0);
+          text("ZOOM",999/2 - 10,700/2-150);
+          fill(0,0,0);
+          text("ZOOM",999/2,700/2-150);
+          fill(0, 157, 168);
+          
+          //play button
+          rect(999/2-100,700/2+50,200,100,10);
+          if (mouseX>399.5 && mouseX<599.5 && mouseY>400 && mouseY<500 && playing===false) {
+            fill(232);
+            cursor(HAND);
+          } else {
+            fill(255);
+            cursor(ARROW);
+          }
+          textSize(75);
+          text("Play!",999/2,700/2+95);
+        }
 			  if (playing===true) {
+          cursor(ARROW);
+          home=false;
 			  	background(255,255,255);
 			  	//rect(x,y,width,height,trim);
 			  	//ellipse(x,y,width,height);
@@ -174,6 +201,7 @@
 
 			  	//if the player loses
 			  	if (lost===true) {
+            x1=2000;x2=2000;x3=2000;x4=2000;x5=2000;x6=2000;x7=2000;x8=2000;x9=2000;
 			  		playing=false;
 			  		spd=10000;
 			  		var n=instructions;
@@ -183,16 +211,28 @@
 			  		textSize(120);
 			  		text("GAME OVER!",width/2,height/2-150);
 			  		textSize(20);
-			  		fill(150,150,150);
-			  		text("(Click in a certain spot for a surprise!)",width/2,height/2+75)
-			  		textSize(20);
 			  		fill(255,255,255);
-			  		text("Reload to play again",width/2,height/2+300);
 			  		textAlign(LEFT);
-					text("Your score was: " + n,width/2-90,height/2-20);
+					  text("Your score was: " + n,width/2-90,height/2-20);
 			  		textAlign(CENTER,CENTER);
-			  		fill(0,0,0);
-			  		rect(width/2+96,height/2-45,300,30);
+            noFill();
+            stroke(rr,rg,255);
+            strokeWeight(5);
+            if(instructions<=19.5){
+              rect(width/2-120,2*height/3-50,240,100,10);
+              noStroke();
+              textSize(50);
+              fill(rr,rg,255);
+              text("𝗥𝗘𝗦𝗧𝗔𝗥𝗧",width/2,2*height/3);
+            } else {
+              rect(width/2-120,height/9-50,240,100,10);
+              noStroke();
+              textSize(50);
+              fill(rr,rg,255);
+              text("𝗥𝗘𝗦𝗧𝗔𝗥𝗧",width/2,height/9);
+            }
+            fill(0,0,0);
+            rect(width/2+96,height/2-45,300,30);
 			  		if (instructions>19.5) {
 				  		fill(255, 191, 0);
 				  		textSize(40);
