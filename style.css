@@ -3,6 +3,10 @@ body{
   background-color: rgb(110,110,110);
 }
 
+#mycanvas{
+  border: 0;
+}
+
 b {
   font-weight: bold;
 }
