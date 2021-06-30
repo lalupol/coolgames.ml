@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Escape Room!</title>
+        <link rel="icon" type="image/png" href="door.png">
+        <script async src="https://arc.io/widget.min.js#iiwPoKE1"></script>
+        <style>
+          body {
+            background-color: black;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: hidden;
+          }
+          .center{
+            text-align: center;
+          }
+        </style>
+    </head>
+
+    <body>
+      <canvas id="mycanvas"></canvas>
+    </body>
+    
+    <script src="/processing.min.js"></script>
+
+    <script>
+      var canvas = document.getElementById("mycanvas");
+      let resizeCanvas=function(){
+        width=canvas.width;
+        height=canvas.height;
+        canvas.width=innerWidth;
+        canvas.height=innerHeight;
+      }
+      resizeCanvas();
+      window.addEventListener('resize',function(){
+        resizeCanvas();
+      });
+    </script>
+    <script src="script.js"></script>
+</html>

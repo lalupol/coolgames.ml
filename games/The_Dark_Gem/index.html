@@ -1,0 +1,2941 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>The Dark Gem</title>
+        <link rel="icon" type="image/png" href="dark-gem.png">
+        <script async src="https://arc.io/widget.min.js#iiwPoKE1"></script>
+        <style>
+        body {
+          background-color:black;
+          margin: 0 !important;
+          padding: 0 !important;
+          overflow:hidden;
+        }
+        .center {
+          text-align:center;
+        }
+        </style>
+    </head>
+    <body>
+        <canvas id="mycanvas">Please reload the page</canvas>
+        <h3><font color="white" class=center><center>Please reload the page if you would like to activate full-screen mode (SUGGESTED)</center></font></h3>
+    </body>
+
+    <script src="/processing.min.js"></script>
+    <script>
+    var programCode = function(processingInstance) {
+      with (processingInstance) {
+        size(innerWidth,innerHeight);
+
+
+        var bgm=new Audio('euphoria.mp3');
+        var bm=new Audio('link-ncs.mp3');
+        var dg=new Audio('flashback.mp3');
+        var music=false;
+        var bossMusic=false;
+        var bmi=0;
+        var scene=0;
+        var setupCOLOR=175;
+        var blockSize = round(width/25);
+        var playerSize = blockSize - 1;
+        var gh=blockSize*12;
+        var pr=0;
+        var pg=155;
+        var pd=2;
+        var pgd=1;
+        var prd=2.82352942;
+        var gpb=0;
+        var gpg=220;
+        var gpd=2;
+        var gpgd=0.2;
+        var gpbd=2.4;
+        var bossTxtTimer=0; //4*60
+        //var playerResponseTxtTimer=0;
+        //var playerResponseTxt=255;
+        var bossTxt=150;
+        var bossSize=4*playerSize;
+        var bossx=3*width/4;
+        var bossy=-bossSize;
+        var dieFromBoss=0;
+        var dieFromBossVal=false;
+        var bossTxt2=255;
+        var bossOnGround=false;
+        var groundForBoss=height-blockSize-bossSize;
+        var playerHealth=100;
+        var damageInterval=0.8*60;
+        var damageTimer=damageInterval;
+        var damageAmount=5;
+        var bossHealth=100;
+        var bossShootSpawn=360;
+        var bossShootTimer = bossShootSpawn-60;
+        var bossShootSize=blockSize/3;
+        var bossShaking=0;
+        var bossAttackHit=0;
+        var bSI;
+        var bossAttackHitStay;
+        var bossmove1 = -width/150;
+        var bossmove2 = -width/70;
+        var bossShake=false;
+        var bossFollow=true;
+        var playerFlyDisplay=false;
+        var playerFlying=false;
+        var bowHeld=false;
+        var bowPowerShow=false;
+        var bowUsed=0;
+        var bowPowerY=-7.5*height;
+        var bowAngle=0;
+        var bowTimer=180;
+        var undergroundTimer=0;
+        var brect=0;
+        var brect1=0;
+        var btimer=0;
+        var btxt1=height-gh/2;
+        var player;
+        var blocks = [];
+        var bblocks = [];
+        var lava = [];
+        var portal = [];
+        var gportal = [];
+        var bossShooter = [];
+        var playerArrows = [];
+
+        var darkGemRoomFade=0;
+        var dgBoom=false;
+        var voltage = gh/10;
+        var voltageCategory="off";
+        var gemVolt=0.4*gh;
+        var gemCompressed=false;
+        var gemplode=0;
+
+        /**
+          LVL xXxXxXxXx = [
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         "
+        ];
+          
+        **/
+
+        LVL1 = [
+          "                         ",
+          "                         ",
+          "2                        ",
+          "0000000                  ",
+          "      0000000           0",
+          "            000000      0",
+          "                        0",
+          "                     0000",
+          "                 00000   ",
+          "           0000000       ",
+          "     0000000             ",
+          "000000                   "
+        ];
+
+        LVL2 = [
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                        2",
+          "                   000000",
+          "                         ",
+          "               000       ",
+          "           000           ",
+          "      000                ",
+          "0000                     "
+        ];
+
+        LVL3 = [
+          "                         ",
+          "                        2",
+          "                      000",
+          "                         ",
+          "                 000     ",
+          "                         ",
+          "            000          ",
+          "                         ",
+          "       000               ",
+          "                         ",
+          "     0                   ",
+          "000000                   "
+        ];
+
+        LVL4 = [
+          "                         ",
+          "                         ",
+          "                        2",
+          "                     0000",
+          "                         ",
+          "                         ",
+          "                 00      ",
+          "                         ",
+          "             00          ",
+          "                         ",
+          "        000              ",
+          "0000                     "
+        ];
+
+        LVL5 = [
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                        2",
+          "0000001100000000001100000"
+        ];
+
+        LVL6 = [
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                        2",
+          "                      000",
+          "                         ",
+          "                 001     ",
+          "          0000           ",
+          "      001                ",
+          "0000                     "
+        ];
+
+        LVL7 = [
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "           1     1      2",
+          "0000010000000000000001000 "
+        ];
+
+        LVL8 = [
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "              1          ",
+          "              1          ",
+          "              1          ",
+          "        1                ",
+          "   1    1        1      2",
+          "0000000000000000000000000"
+        ];
+/*
+        LVL9 = [
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "    111        111      2",
+          "0000000001110000000000000"
+        ];
+*/
+        LVL9 = [
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "0000000000011            ",
+          "    1       1            ",
+          "    1                    ",
+          "                         ",
+          "         1     111      2",
+          "0000000000000000000000000"
+        ];
+
+        LVL10 = [
+          "                         ",
+          "         1      1        ",
+          "2       11      1        ",
+          "000000000000000000000    ",
+          "                    00   ",
+          "                     00  ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "       111              0",
+          "0000000000000001110000000"
+        ];
+
+        LVL11 = [
+          "                         ",
+          "    1     1     1        ",
+          "2   1     1     1        ",
+          "000000000000000000000    ",
+          "      1     1       00   ",
+          "                     00  ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                1        ",
+          "       11      111      0",
+          "0000000000000000000000000"
+        ];
+
+        LVL12 = [
+          "                         ",
+          "                         ",
+          "                         ",
+          "     1                   ",
+          "     1                   ",
+          "2    1     111           ",
+          "000000000000000000000    ",
+          "                1   00   ",
+          "                1        ",
+          "                        0",
+          "         1              0",
+          "0000000000000000000000000"
+        ];
+
+        LVL13 = [
+          "                         ",
+          "                         ",
+          "                         ",
+          "           1     1       ",
+          "           1     1       ",
+          "2    111   1     1       ",
+          "000000000000000000000    ",
+          "                    00   ",
+          "                         ",
+          "                        0",
+          "         1             10",
+          "0000000000000000000000000"
+        ];
+
+        LVL14 = [
+          "                         ",
+          "                         ",
+          "                         ",
+          "11111    1               ",
+          "0000    01               ",
+          "2       01     111       ",
+          "000000000000000000000    ",
+          "       1            00   ",
+          "                         ",
+          "                         ",
+          "    1                   0",
+          "0000000000000001001000000"
+        ];
+
+        LVL15 = [
+          "2                        ",
+          "0010000001001110         ",
+          "               00        ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                  0000001",
+          "                  1      ",
+          "                  1      ",
+          "           01110001      ",
+          "      011111             ",
+          "0001111                  "
+        ];
+
+        LVL16 = [
+          "                         ",
+          "                         ",
+          "2                        ",
+          "00010010010010010000     ",
+          "                         ",
+          "                      0  ",
+          "                         ",
+          "                         ",
+          "                        0",
+          "                        0",
+          "                        0",
+          "0010010010010010010010000"
+        ];
+
+        LVL17 = [
+          "                         ",
+          "                         ",
+          "00000000    0000000000000",
+          "                         ",
+          "                         ",
+          "111111    111111111111111",
+          "                         ",
+          "                         ",
+          "                         ",
+          "1111     1111111111111111",
+          "      2                  ",
+          "    00000                "
+        ];
+
+        LVL18 = [
+          "                         ",
+          "                         ",
+          "                         ",
+          "                        2",
+          "                     1000",
+          "                  0010   ",
+          "               0010      ",
+          "            0010         ",
+          "         0010            ",
+          "      0010               ",
+          "   0010                  ",
+          "0000                     "
+        ];
+
+        LVL19 = [
+          "                         ",
+          "                         ",
+          "           o             ",
+          "          ooo            ",
+          "         oo oo           ",
+          "        oo   oo          ",
+          "       oo     oo         ",
+          "      oo       oo        ",
+          "     oo         oo       ",
+          "    oo           oo      ",
+          "   oo             oo    3",
+          "oooo               oooooo"
+        ];
+
+        LVL20 = [
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "                         ",
+          "ooooooooooooooooooooooooo"
+        ];
+
+        // Holds key codes
+        var keys = [];
+
+        
+
+        // Collision function find if two squares are colliding
+        var collide = function(x1, y1, s1, x2, y2, s2) {
+            return  x1 - x2 < s2 &&
+                    x2 - x1 < s1 &&
+                    y1 - y2 < s2 &&
+                    y2 - y1 < s1;
+        };
+
+        var glow=function(x,y,size){
+          for(var i=255;i>0;i--){
+              fill(255, 255, 255, i);
+              ellipse(x,y,size-size/45*i,size-size/45*i);
+          }
+        }
+
+        var bowglow=function(x,y,size){
+          for(var i=255;i>0;i--){
+              fill(232, i);
+              ellipse(x,y,size-size/45*i,size-size/45*i);
+          }
+        }
+
+        var darkGem=function(x,y,size){
+          textSize(size);
+          
+          //glow(x,y,2.75*size);
+
+          fill(0, 0, 0);
+          beginShape();
+          vertex(x+1.1*size/2,y-1.25*size/5);
+          vertex(x,y+3*size/5);
+          vertex(x-1.1*size/2,y-1.25*size/5);
+          vertex(x-1.1*size/4,y-2.7*size/5);
+          vertex(x+1.1*size/4,y-2.7*size/5);
+          endShape();
+          
+          fill(255, 255, 255, 60);
+          triangle(x-1.1*size/4,y-1.08*size/2,x+1.1*size/4,y-1.08*size/2,x,y+1.2*size/2);
+          fill(255, 255, 255,50);
+          triangle(x-1.1*size/4,y-1.08*size/2,x-1.1*size/2,y-size/2+size/4,x,y+1.2*size/2);
+          fill(255, 255, 255,50);
+          triangle(x+1.1*size/4,y-1.08*size/2,x+1.1*size/2,y-size/2+size/4,x,y+1.2*size/2);
+          
+          fill(0, 0, 0, 60);
+          triangle(x-0.82*size/4,y-size/2+size/4,x-1.1*size/4,y-1.08*size/2,x,y-1.08*size/2);
+          fill(0, 0, 0, 60);
+          triangle(x+0.82*size/4,y-size/2+size/4,x+1.1*size/4,y-1.08*size/2,x,y-1.08*size/2);
+          
+          fill(0, 0, 0,60);
+          triangle(x-1.1*size/2,y-size/2+size/4,x+1.1*size/2,y-size/2+size/4,x,y+1.2*size/2);
+      }
+
+        var HomePlayer=function(x,y,size){
+          fill(67, 159, 240);
+          rect(x, y, size, size, size/10);
+          stroke(0,0,0);
+          strokeWeight(size/10);
+          point(x+size/3,y+size/3);
+          point(x+2*size/3,y+size/3);
+
+          //mouth
+          noStroke();
+          fill(0,0,0);
+          triangle(x+size/3-gh/100,y+4*size/7,x+2*size/3+gh/100,y+4*size/7,x+size/2,y+6*size/7);
+
+          //red fire
+          fill(255, 76, 76);
+          ellipse(x-size/6+size/5,y+size+size/10,size+size/3-2,size/5);
+
+          //orange fire
+          fill(247, 180, 22);
+          ellipse(x-size/6+size/3,y+size+size/10,size+size/3-2,size/5.5);
+
+          //yellow fire
+          fill(255, 232, 25);
+          ellipse(x-size/6+size/2,y+size+size/10,size+size/3-2,size/5.5);
+
+          //platform
+          fill(200, 200, 200);
+          rect(x-size/6, y+size, size+size/3, size/5);
+        };
+
+        var HE=function(x,y,size){
+          stroke(255,255,255);
+          strokeWeight(size/40);
+          
+          //vibrations
+          noFill();
+          ellipse(x+size/2,y+size,9*size/8,size/9);
+          stroke(255,255,255,200);
+          ellipse(x+size/2,y+size,3*size/2,size/4);
+          stroke(255,255,255,150);
+          ellipse(x+size/2,y+size,1.9*size,size/2.5);
+          stroke(255,255,255,100);
+          ellipse(x+size/2,y+size,2.3*size,size/2);
+          stroke(255,255,255,50);
+          ellipse(x+size/2,y+size,2.75*size,size/1.5);
+
+          //block
+          stroke(255,25,25);
+          fill(65, 65, 65);
+          rect(x, y, size, size, size/10);
+
+          //eyes
+          stroke(175,0,0);
+          strokeWeight(size/20);
+          line(x+size/3-size/12,y+size/3-size/12,x+size/3+size/12,y+size/3+size/12);
+          line(x+2*size/3-size/12,y+size/3+size/12,x+2*size/3+size/12,y+size/3-size/12);
+
+          //mouth
+          stroke(175,0,0);
+          strokeWeight(size/20);
+          line(x+size/3, y+3*size/5, x+2*size/3, y+2*size/3);
+          line(x+size/3, y+3*size/5, x+size/3.5, y+2*size/3);
+          noStroke();
+        }
+
+        var boss=function(x,y,vibrations){
+          if(vibrations===true){
+            HE(x,y,bossSize);
+          }
+          else if(vibrations===false){
+            stroke(255,255,255);
+          strokeWeight(bossSize/40);
+
+          //block
+          stroke(255,25,25);
+          fill(65, 65, 65);
+          rect(x, y, bossSize, bossSize, bossSize/10);
+
+          //eyes
+          stroke(175,0,0);
+          strokeWeight(bossSize/20);
+          line(x+bossSize/3-bossSize/12,y+bossSize/3-bossSize/12,x+bossSize/3+bossSize/12,y+bossSize/3+bossSize/12);
+          line(x+2*bossSize/3-bossSize/12,y+bossSize/3+bossSize/12,x+2*bossSize/3+bossSize/12,y+bossSize/3-bossSize/12);
+
+          //mouth
+          stroke(175,0,0);
+          strokeWeight(bossSize/20);
+          line(x+bossSize/3, y+3*bossSize/5, x+2*bossSize/3, y+2*bossSize/3);
+          line(x+bossSize/3, y+3*bossSize/5, x+bossSize/3.5, y+2*bossSize/3);
+          noStroke();
+          }
+        }
+
+        var bow=function(x,y,size){
+          //arrow
+          if(bowTimer >= 180){
+            noStroke();
+            arrow(x,y,size);
+          }
+
+          //bow string part
+          stroke(232);
+          strokeWeight(size/30);
+          line(x,y-size/2,x,y+size/2);
+
+          //brown part
+          stroke(160,120,60);
+          strokeWeight(size/10);
+          noFill();
+          arc(x,y,size,size,-PI/2,PI/2);
+
+          noStroke();
+        }
+
+        var arrow=function(x,y,size){
+          //top back silver part
+          fill(200);
+          triangle(x-size/5,y,x-size/10-size/5,y-size/5,x,y);
+          
+          //bottom back silver part
+          fill(180);
+          triangle(x-size/5,y,x-size/10-size/5,y+size/5,x,y);
+
+
+          //top middle wood part
+          fill(205,125,55);
+          rect(x-size/5+size/10+size/30,y-size/20,size-size/5,size/20);
+
+          //bottom middle wood part
+          fill(185,105,35);
+          rect(x-size/5+size/10+size/30,y,size-size/5-size/50,size/20);
+
+
+          //top front silver part
+          fill(200);
+          triangle(x+size-size/5-size/5-size/10+size/7.5,y,x+size-size/5-size/5-size/5+size/7.5,y-size/5,x+size-size/5,y);
+
+          //bottom front silver part
+          fill(175);
+          triangle(x+size-size/5-size/5-size/10+size/7.5,y,x+size-size/5-size/5-size/5+size/7.5,y+size/5,x+size-size/5,y);
+        }
+
+        //arrow constructor
+        var PlayerArrow = (function(){
+          
+          PlayerArrow = function(x,y,size,angle){
+            this.x = x;
+            this.y = y;
+            this.size = size;
+            this.angle = angle;
+            this.pos = new PVector(this.x,this.y);
+            this.vel = new PVector.fromAngle(this.angle);
+            this.vel.mult(1.4*this.size/2);
+          };
+
+          PlayerArrow.prototype.display = function(){
+            pushMatrix();
+            translate(this.pos.x+this.size/2,this.pos.y+this.size/2);
+            rotate(this.angle);
+            arrow(3*this.size/4,0,this.size);
+            popMatrix();
+
+            //collide(this.pos.x+this.size/2+3*this.size/4+this.size-this.size/5-this.size/5-this.size/5+this.size/7.5,this.pos.y+this.size/2+this.size-this.size/5,2*this.size/5);
+          };
+
+          PlayerArrow.prototype.update = function(){
+            this.pos.add(this.vel);
+            //this.x+this.size-this.size/5,this.y
+            //if(collide(bossx,bossy,bossSize,this.pos.x+this.size/2+3*this.size/4+this.size-this.size/5-this.size/5-this.size/5+this.size/7.5,this.pos.y+this.size/2+this.size-this.size/5,2*this.size/5))
+            if(this.pos.x+this.size/2+3*this.size/4+this.size-this.size/5>bossx && this.pos.x+this.size/2+3*this.size/4+this.size-this.size/5<bossx+bossSize && this.pos.y+this.size/2>bossy && this.pos.y+this.size/2<bossy+bossSize){
+              bossHealth-=4;
+              playerArrows.splice(this,1);
+            }
+            else if(this.pos.x+this.size/2+3*this.size/4+this.size-this.size/5>1.1*width || this.pos.x+this.size/2+3*this.size/4+this.size-this.size/5<-0.1*width || this.pos.y+this.size/2>1.1*height || this.pos.y+this.size/2<-0.1*height){
+              playerArrows.splice(this,1);
+            }
+          };
+
+          return PlayerArrow;
+
+        })();
+
+        // Player constructor (collisions here)
+        var Player = (function() {
+            // Make a player
+            Player = function(x, y) {
+                this.x = x * blockSize;
+                this.y = y * blockSize;
+                this.prevX = this.x;
+                this.prevY = this.y;
+                this.grav = 0;
+                this.canJump = false;
+            };
+            
+            // Draw the player
+            Player.prototype.display = function() {
+                fill(39, 209, 51);
+                rect(this.x, this.y, playerSize, playerSize, gh/75);
+                stroke(0,0,0);
+                strokeWeight(gh/75);
+                point(this.x+playerSize/3,this.y+playerSize/3);
+                point(this.x+2*playerSize/3,this.y+playerSize/3);
+                noStroke();
+                fill(0,0,0);
+                triangle(this.x+playerSize/3-gh/100,this.y+4*playerSize/7,this.x+2*playerSize/3+gh/100,this.y+4*playerSize/7,this.x+playerSize/2,this.y+6*playerSize/7);
+
+                if(scene===20 && keys[UP] && this.y>=height-2*blockSize){
+                  playerFlyDisplay=true;
+                  playerFlying=true;
+                  normal=true;
+                }
+                if(scene===20 && keys[UP] && this.y<height-2*blockSize){
+                  playerFlyDisplay=true;
+                  playerFlying=true;
+                }
+                if(normal===true && playerFlyDisplay===true){
+                  //red fire
+                  fill(255, 50, 50);
+                  ellipse(this.x-playerSize/6+playerSize/5,this.y+playerSize+playerSize/10,playerSize+playerSize/3-2,playerSize/5);
+                  
+                  //orange fire
+                  fill(247, 180, 22);
+                  ellipse(this.x-playerSize/6+playerSize/3,this.y+playerSize+playerSize/10,playerSize+playerSize/3-2,playerSize/5.5);
+
+                  //yellow fire
+                  fill(255, 232, 25);
+                  ellipse(this.x-playerSize/6+playerSize/2,this.y+playerSize+playerSize/10,playerSize+playerSize/3-2,playerSize/5.5);
+
+                  //platform
+                  fill(200, 200, 200);
+                  rect(this.x-playerSize/6, this.y+playerSize, playerSize+playerSize/3, playerSize/5);
+                }
+                if(normal===false && playerFlyDisplay===true){
+                  //red fire
+                  fill(255, 50, 50);
+                  ellipse(this.x+playerSize+playerSize/6-playerSize/5,this.y+playerSize+playerSize/10,playerSize+playerSize/3-2,playerSize/5);
+                  
+                  //orange fire
+                  fill(247, 180, 22);
+                  ellipse(this.x+playerSize+playerSize/6-playerSize/3,this.y+playerSize+playerSize/10,playerSize+playerSize/3-2,playerSize/5.5);
+
+                  //yellow fire
+                  fill(255, 232, 25);
+                  ellipse(this.x+playerSize+playerSize/6-playerSize/2,this.y+playerSize+playerSize/10,playerSize+playerSize/3-2,playerSize/5.5);
+
+                  //platform
+                  fill(200, 200, 200);
+                  rect(this.x-playerSize/6, this.y+playerSize, playerSize+playerSize/3, playerSize/5);
+                }
+
+
+
+
+                if(bowHeld===true && scene===20){
+                  pushMatrix();
+                  translate(this.x+playerSize/2,this.y+playerSize/2);
+                  rotate(bowAngle);
+                  bow(3*playerSize/4,0,playerSize);
+                  popMatrix();
+
+                  // left/up (s)
+                  if(keys[83]){
+                    bowAngle-=6*PI/360;
+                  }
+
+                  // right/down (a)
+                  if(keys[68]){
+                    bowAngle+=6*PI/360;
+                  }
+
+                  //shoot (SPACE)
+                  if(keys[32] && bowTimer >= 180){
+                    playerArrows.push(new PlayerArrow(this.x,this.y,playerSize,bowAngle));
+                    bowUsed++;
+                    bowTimer=0;
+                  }
+                }
+            };
+            
+            // Move the player (collisions here)
+            Player.prototype.move = function() {
+                // Set previous position
+                this.prevX = this.x;
+                this.prevY = this.y;
+                
+                // Move the player on the y axis
+                if(playerFlying===false){
+                  this.grav += gh/700;
+                  this.y += this.grav;
+                }
+                if(playerFlying===true && keys[UP] && this.y>0){
+                  playerFlyingDisplay=true;
+                  this.grav = gh/75;
+                  this.y -= this.grav;
+                  if(keys[RIGHT] && normal===false){
+                    normal=true;
+                  }
+                  if(keys[LEFT] && normal===true){
+                    normal=false;
+                  }
+                }
+                if(playerFlying===true && keys[UP]===false){
+                  playerFlyingDisplay=true;
+                  this.grav = -gh/1000;
+                  this.y -= this.grav;
+                  if(this.y>=height-2*blockSize){
+                    playerFlying=false;
+                    playerFlyingDisplay=false;
+                  }
+                }
+                if(playerFlying===true && playerFlyDisplay===true && keys[DOWN]){
+                  playerFlying=false;
+                  playerFlyDisplay=false;
+                }
+                if(scene !== 20){
+                  playerFlying=false;
+                  playerFlyDisplay=false;
+                }
+                
+                // Find if the player collides with any blocks
+                for (var i = 0; i < blocks.length; i++) {
+                    if (collide(blocks[i].x, blocks[i].y, blockSize, this.x, this.y, playerSize)) {
+                        this.grav = 0;
+                        if (this.prevY < blocks[i].prevY) {
+                            this.canJump = true;
+                        }
+                        this.y = this.prevY < blocks[i].prevY ? blocks[i].y - playerSize : blocks[i].y + blockSize;
+                    }
+                }
+
+                // Find if the player collides with bblocks
+                for (var i = 0; i < bblocks.length; i++) {
+                    if (collide(bblocks[i].x, bblocks[i].y, blockSize, this.x, this.y, playerSize)) {
+                        if(playerFlying===false){
+                          playerFlyDisplay=false;
+                        }
+                        this.grav = 0;
+                        if (this.prevY < bblocks[i].prevY) {
+                            this.canJump = true;
+                        }
+                        this.y = this.prevY < bblocks[i].prevY ? bblocks[i].y - playerSize : bblocks[i].y + blockSize;
+                    }
+                }
+                
+                // Find if the player collides with lava
+                for (var i = 0; i < lava.length; i++) {
+                    if (collide(lava[i].x-1, lava[i].y-1, blockSize+2, this.x, this.y, playerSize)) {
+                      if(scene<9){
+                        player = new Player(0,6+height/blockSize-12);
+                      }
+                      if(scene>8 && scene !== 17){
+                        player = new Player(0,9+height/blockSize-12);
+                      }
+                      if(scene===17){
+                        player = new Player(0,1+height/blockSize-12);
+                      }
+                    }
+                }
+
+                
+                // Find if the player collides with dA bOss
+                if(collide(bossx, bossy, bossSize, this.x, this.y, playerSize) && scene===20) {
+                  this.grav = 0;
+                  if (this.prevY < bossy) {
+                      this.canJump = true;
+                      playerFlying=false;
+                      playerFlyingDisplay=false;
+                  }
+                  this.y = this.prevY < bossy ? bossy - playerSize : bossy + bossSize;
+
+                  if(bossmove1<0 && bossmove2<0 && this.x<bossx && this.y>bossy && playerHealth>0 && darkGemRoomFade===0){
+                    playerHealth-=1;
+                  } else if(bossmove1>0 && bossmove2>0 && this.x>bossx+bossSize && this.y>bossy && playerHealth>0 && darkGemRoomFade===0){
+                    playerHealth-=1;
+                  }
+                  else if(playerHealth>0 && darkGemRoomFade===0){
+                    if(damageTimer>=damageInterval){
+                      playerHealth-=damageAmount;
+                      damageTimer=0;
+                    }
+                    damageTimer++;
+                  }
+                  else {
+                    damageTimer = 0.8*60;
+                  }
+                  
+
+                  if(playerHealth<=0){
+                    keys[keyCode] = false;
+                    dieFromBossVal=true;
+                    playerHealth=0;
+                  }
+                  if(playerFlying===false){
+                    playerFlyDisplay=false;
+                  }
+                }
+
+                //Find if player collides with the bow powerup
+                if(collide(width/2-1.375*playerSize,height/2-1.375*playerSize,2.75*playerSize,this.x,this.y,playerSize) && bowPowerShow===true){
+                  bowPowerY=2*height;
+                  bowHeld=true;
+                }
+
+                // Find if the player collides with gportal [poortal]
+                for (var i = 0; i < gportal.length; i++) {
+                    if (collide(gportal[i].x, gportal[i].y, blockSize, this.x, this.y, playerSize) && scene===19) {
+                      keys[keyCode] = false;
+                      if(bgm.volume>0){
+                        bgm.volume = bgm.volume - 1/128;
+                      }
+
+                      if(scene===19){
+                        playerHealth=100;
+                        bossHealth=100;
+                        bowHeld=false;
+                        bowAngle=0;
+                        bossx=3*width/4;
+                        bossShooter.fill(bossShooter, null);
+                        playerArrows=[];
+                        bossAttackHit=0;
+                        bowPowerShow=false;
+                        bowPowerY=-1*height;
+                        bowTimer=180;
+                        bowUsed=0;
+                        undergroundTimer=0;
+                        if(brect1<255){
+                          brect1+=2;
+                        }
+                        if(brect1>=255){
+                          brect1=0;
+                          scene++;
+
+                          player = new Player(0,9+height/blockSize-12);
+                          for (var i = 0; i < LVL19.length; i++) {
+                              for (var j = 0; j < LVL19[i].length; j++) {
+                                  if (LVL19[i].charAt(j) ==="0") {
+                                      blocks.pop(new Block(j, i+height/blockSize-12));
+                                  }
+                                  if (LVL19[i].charAt(j) ==="1") {
+                                      lava.pop(new Lava(j, i+height/blockSize-12));
+                                  }
+                                  if (LVL19[i].charAt(j) ==="2") {
+                                      portal.pop(new Portal(j, i+height/blockSize-12));
+                                  }
+                                  if (LVL19[i].charAt(j) ==="3") {
+                                      gportal.pop(new GPortal(j, i+height/blockSize-12));
+                                  }
+                                  if (LVL19[i].charAt(j) ==="o") {
+                                      bblocks.pop(new BBlock(j, i+height/blockSize-12));
+                                  }
+                              }
+                          }
+
+                          for (var i = 0; i < LVL20.length; i++) {
+                              for (var j = 0; j < LVL20[i].length; j++) {
+                                  if (LVL20[i].charAt(j) ==="0") {
+                                      blocks.push(new Block(j, i+height/blockSize-12));
+                                  }
+                                  if (LVL20[i].charAt(j) ==="1") {
+                                      lava.push(new Lava(j, i+height/blockSize-12));
+                                  }
+                                  if (LVL20[i].charAt(j) ==="2") {
+                                      portal.push(new Portal(j, i+height/blockSize-12));
+                                  }
+                                  if (LVL20[i].charAt(j) ==="3") {
+                                      gportal.push(new GPortal(j, i+height/blockSize-12));
+                                  }
+                                  if (LVL20[i].charAt(j) ==="o") {
+                                      bblocks.push(new BBlock(j, i+height/blockSize-12));
+                                  }
+                              }
+                          }
+                        }
+                      }
+
+                      if(scene===20){
+                        player = new Player(0,10+height/blockSize-12);
+                        for (var i = 0; i < LVL19.length; i++) {
+                            for (var j = 0; j < LVL19[i].length; j++) {
+                                if (LVL19[i].charAt(j) ==="0") {
+                                    blocks.pop(new Block(j, i+height/blockSize-12));
+                                }
+                                if (LVL19[i].charAt(j) ==="1") {
+                                    lava.pop(new Lava(j, i+height/blockSize-12));
+                                }
+                                if (LVL19[i].charAt(j) ==="2") {
+                                    portal.pop(new Portal(j, i+height/blockSize-12));
+                                }
+                                if (LVL19[i].charAt(j) ==="3") {
+                                    gportal.pop(new GPortal(j, i+height/blockSize-12));
+                                }
+                                if (LVL19[i].charAt(j) ==="o") {
+                                    bblocks.pop(new BBlock(j, i+height/blockSize-12));
+                                }
+                            }
+                        }
+                        for (var i = 0; i < LVL20.length; i++) {
+                            for (var j = 0; j < LVL20[i].length; j++) {
+                                if (LVL20[i].charAt(j) ==="0") {
+                                    blocks.push(new Block(j, i+height/blockSize-12));
+                                }
+                                if (LVL20[i].charAt(j) ==="1") {
+                                    lava.push(new Lava(j, i+height/blockSize-12));
+                                }
+                                if (LVL20[i].charAt(j) ==="2") {
+                                    portal.push(new Portal(j, i+height/blockSize-12));
+                                }
+                                if (LVL20[i].charAt(j) ==="3") {
+                                    gportal.push(new GPortal(j, i+height/blockSize-12));
+                                }
+                                if (LVL20[i].charAt(j) ==="o") {
+                                    bblocks.push(new BBlock(j, i+height/blockSize-12));
+                                }
+                            }
+                        }
+                      }
+                    }
+                }
+
+                // Find if the player collides with portal
+                for (var i = 0; i < portal.length; i++) {
+                    if (collide(portal[i].x, portal[i].y, blockSize, this.x, this.y, playerSize)) {
+                      scene++;
+                      if(scene===2){
+                        player = new Player(0,6+height/blockSize-12);
+                        for (var i = 0; i < LVL1.length; i++) {
+                            for (var j = 0; j < LVL1[i].length; j++) {
+                                if (LVL1[i].charAt(j) ==="0") {
+                                    blocks.pop(new Block(j, i+height/blockSize-12));
+                                }
+                                if (LVL1[i].charAt(j) ==="1") {
+                                    lava.pop(new Lava(j, i+height/blockSize-12));
+                                }
+                                if (LVL1[i].charAt(j) ==="2") {
+                                    portal.pop(new Portal(j, i+height/blockSize-12));
+                                }
+                            }
+                        }
+                        for (var i = 0; i < LVL2.length; i++) {
+                            for (var j = 0; j < LVL2[i].length; j++) {
+                                if (LVL2[i].charAt(j) ==="0") {
+                                    blocks.push(new Block(j, i+height/blockSize-12));
+                                }
+                                if (LVL2[i].charAt(j) ==="1") {
+                                    lava.push(new Lava(j, i+height/blockSize-12));
+                                }
+                                if (LVL2[i].charAt(j) ==="2") {
+                                    portal.push(new Portal(j, i+height/blockSize-12));
+                                }
+                            }
+                        }
+                      }
+                      if(scene===3){
+                        player = new Player(0,6+height/blockSize-12);
+                        for (var i = 0; i < LVL2.length; i++) {
+                            for (var j = 0; j < LVL2[i].length; j++) {
+                                if (LVL2[i].charAt(j) ==="0") {
+                                    blocks.pop(new Block(j, i+height/blockSize-12));
+                                }
+                                if (LVL2[i].charAt(j) ==="1") {
+                                    lava.pop(new Lava(j, i+height/blockSize-12));
+                                }
+                                if (LVL2[i].charAt(j) ==="2") {
+                                    portal.pop(new Portal(j, i+height/blockSize-12));
+                                }
+                            }
+                        }
+                        for (var i = 0; i < LVL3.length; i++) {
+                            for (var j = 0; j < LVL3[i].length; j++) {
+                                if (LVL3[i].charAt(j) ==="0") {
+                                    blocks.push(new Block(j, i+height/blockSize-12));
+                                }
+                                if (LVL3[i].charAt(j) ==="1") {
+                                    lava.push(new Lava(j, i+height/blockSize-12));
+                                }
+                                if (LVL3[i].charAt(j) ==="2") {
+                                    portal.push(new Portal(j, i+height/blockSize-12));
+                                }
+                            }
+                        }
+                      }
+                      if(scene===4){
+                        player = new Player(0,6+height/blockSize-12);
+                        for (var i = 0; i < LVL3.length; i++) {
+                            for (var j = 0; j < LVL3[i].length; j++) {
+                                if (LVL3[i].charAt(j) ==="0") {
+                                    blocks.pop(new Block(j, i+height/blockSize-12));
+                                }
+                                if (LVL3[i].charAt(j) ==="1") {
+                                    lava.pop(new Lava(j, i+height/blockSize-12));
+                                }
+                                if (LVL3[i].charAt(j) ==="2") {
+                                    portal.pop(new Portal(j, i+height/blockSize-12));
+                                }
+                            }
+                        }
+                        for (var i = 0; i < LVL4.length; i++) {
+                            for (var j = 0; j < LVL4[i].length; j++) {
+                                if (LVL4[i].charAt(j) ==="0") {
+                                    blocks.push(new Block(j, i+height/blockSize-12));
+                                }
+                                if (LVL4[i].charAt(j) ==="1") {
+                                    lava.push(new Lava(j, i+height/blockSize-12));
+                                }
+                                if (LVL4[i].charAt(j) ==="2") {
+                                    portal.push(new Portal(j, i+height/blockSize-12));
+                                }
+                            }
+                        }
+                      }
+                      if(scene===5){
+                        player = new Player(0,6+height/blockSize-12);
+                        for (var i = 0; i < LVL4.length; i++) {
+                            for (var j = 0; j < LVL4[i].length; j++) {
+                                if (LVL4[i].charAt(j) ==="0") {
+                                    blocks.pop(new Block(j, i+height/blockSize-12));
+                                }
+                                if (LVL4[i].charAt(j) ==="1") {
+                                    lava.pop(new Lava(j, i+height/blockSize-12));
+                                }
+                                if (LVL4[i].charAt(j) ==="2") {
+                                    portal.pop(new Portal(j, i+height/blockSize-12));
+                                }
+                            }
+                        }
+                        for (var i = 0; i < LVL5.length; i++) {
+                            for (var j = 0; j < LVL5[i].length; j++) {
+                                if (LVL5[i].charAt(j) ==="0") {
+                                    blocks.push(new Block(j, i+height/blockSize-12));
+                                }
+                                if (LVL5[i].charAt(j) ==="1") {
+                                    lava.push(new Lava(j, i+height/blockSize-12));
+                                }
+                                if (LVL5[i].charAt(j) ==="2") {
+                                    portal.push(new Portal(j, i+height/blockSize-12));
+                                }
+                            }
+                        }
+                      }
+                      if(scene===6){
+                        player = new Player(0,6+height/blockSize-12);
+                        for (var i = 0; i < LVL5.length; i++) {
+                            for (var j = 0; j < LVL5[i].length; j++) {
+                                if (LVL5[i].charAt(j) ==="0") {
+                                    blocks.pop(new Block(j, i+height/blockSize-12));
+                                }
+                                if (LVL5[i].charAt(j) ==="1") {
+                                    lava.pop(new Lava(j, i+height/blockSize-12));
+                                }
+                                if (LVL5[i].charAt(j) ==="2") {
+                                    portal.pop(new Portal(j, i+height/blockSize-12));
+                                }
+                            }
+                        }
+                        for (var i = 0; i < LVL6.length; i++) {
+                            for (var j = 0; j < LVL6[i].length; j++) {
+                                if (LVL6[i].charAt(j) ==="0") {
+                                    blocks.push(new Block(j, i+height/blockSize-12));
+                                }
+                                if (LVL6[i].charAt(j) ==="1") {
+                                    lava.push(new Lava(j, i+height/blockSize-12));
+                                }
+                                if (LVL6[i].charAt(j) ==="2") {
+                                    portal.push(new Portal(j, i+height/blockSize-12));
+                                }
+                            }
+                        }
+                      }
+                      if(scene===7){
+                        player = new Player(0,6+height/blockSize-12);
+                        for (var i = 0; i < LVL6.length; i++) {
+                            for (var j = 0; j < LVL6[i].length; j++) {
+                                if (LVL6[i].charAt(j) ==="0") {
+                                    blocks.pop(new Block(j, i+height/blockSize-12));
+                                }
+                                if (LVL6[i].charAt(j) ==="1") {
+                                    lava.pop(new Lava(j, i+height/blockSize-12));
+                                }
+                                if (LVL6[i].charAt(j) ==="2") {
+                                    portal.pop(new Portal(j, i+height/blockSize-12));
+                                }
+                            }
+                        }
+                        for (var i = 0; i < LVL7.length; i++) {
+                            for (var j = 0; j < LVL7[i].length; j++) {
+                                if (LVL7[i].charAt(j) ==="0") {
+                                    blocks.push(new Block(j, i+height/blockSize-12));
+                                }
+                                if (LVL7[i].charAt(j) ==="1") {
+                                    lava.push(new Lava(j, i+height/blockSize-12));
+                                }
+                                if (LVL7[i].charAt(j) ==="2") {
+                                    portal.push(new Portal(j, i+height/blockSize-12));
+                                }
+                            }
+                        }
+                      }
+                      if(scene===8){
+                        player = new Player(0,6+height/blockSize-12);
+                        for (var i = 0; i < LVL7.length; i++) {
+                            for (var j = 0; j < LVL7[i].length; j++) {
+                                if (LVL7[i].charAt(j) ==="0") {
+                                    blocks.pop(new Block(j, i+height/blockSize-12));
+                                }
+                                if (LVL7[i].charAt(j) ==="1") {
+                                    lava.pop(new Lava(j, i+height/blockSize-12));
+                                }
+                                if (LVL7[i].charAt(j) ==="2") {
+                                    portal.pop(new Portal(j, i+height/blockSize-12));
+                                }
+                            }
+                        }
+                        for (var i = 0; i < LVL8.length; i++) {
+                            for (var j = 0; j < LVL8[i].length; j++) {
+                                if (LVL8[i].charAt(j) ==="0") {
+                                    blocks.push(new Block(j, i+height/blockSize-12));
+                                }
+                                if (LVL8[i].charAt(j) ==="1") {
+                                    lava.push(new Lava(j, i+height/blockSize-12));
+                                }
+                                if (LVL8[i].charAt(j) ==="2") {
+                                    portal.push(new Portal(j, i+height/blockSize-12));
+                                }
+                            }
+                        }
+                      }
+                      if(scene===9){
+                        player = new Player(0,9+height/blockSize-12);
+                        for (var i = 0; i < LVL8.length; i++) {
+                            for (var j = 0; j < LVL8[i].length; j++) {
+                                if (LVL8[i].charAt(j) ==="0") {
+                                    blocks.pop(new Block(j, i+height/blockSize-12));
+                                }
+                                if (LVL8[i].charAt(j) ==="1") {
+                                    lava.pop(new Lava(j, i+height/blockSize-12));
+                                }
+                                if (LVL8[i].charAt(j) ==="2") {
+                                    portal.pop(new Portal(j, i+height/blockSize-12));
+                                }
+                            }
+                        }
+                        for (var i = 0; i < LVL9.length; i++) {
+                            for (var j = 0; j < LVL9[i].length; j++) {
+                                if (LVL9[i].charAt(j) ==="0") {
+                                    blocks.push(new Block(j, i+height/blockSize-12));
+                                }
+                                if (LVL9[i].charAt(j) ==="1") {
+                                    lava.push(new Lava(j, i+height/blockSize-12));
+                                }
+                                if (LVL9[i].charAt(j) ==="2") {
+                                    portal.push(new Portal(j, i+height/blockSize-12));
+                                }
+                            }
+                        }
+                      }
+                      if(scene===10){
+                        player = new Player(0,9+height/blockSize-12);
+                        for (var i = 0; i < LVL9.length; i++) {
+                            for (var j = 0; j < LVL9[i].length; j++) {
+                                if (LVL9[i].charAt(j) ==="0") {
+                                    blocks.pop(new Block(j, i+height/blockSize-12));
+                                }
+                                if (LVL9[i].charAt(j) ==="1") {
+                                    lava.pop(new Lava(j, i+height/blockSize-12));
+                                }
+                                if (LVL9[i].charAt(j) ==="2") {
+                                    portal.pop(new Portal(j, i+height/blockSize-12));
+                                }
+                            }
+                        }
+                        for (var i = 0; i < LVL10.length; i++) {
+                            for (var j = 0; j < LVL10[i].length; j++) {
+                                if (LVL10[i].charAt(j) ==="0") {
+                                    blocks.push(new Block(j, i+height/blockSize-12));
+                                }
+                                if (LVL10[i].charAt(j) ==="1") {
+                                    lava.push(new Lava(j, i+height/blockSize-12));
+                                }
+                                if (LVL10[i].charAt(j) ==="2") {
+                                    portal.push(new Portal(j, i+height/blockSize-12));
+                                }
+                            }
+                        }
+                      }
+                      if(scene===11){
+                        player = new Player(0,9+height/blockSize-12);
+                        for (var i = 0; i < LVL10.length; i++) {
+                            for (var j = 0; j < LVL10[i].length; j++) {
+                                if (LVL10[i].charAt(j) ==="0") {
+                                    blocks.pop(new Block(j, i+height/blockSize-12));
+                                }
+                                if (LVL10[i].charAt(j) ==="1") {
+                                    lava.pop(new Lava(j, i+height/blockSize-12));
+                                }
+                                if (LVL10[i].charAt(j) ==="2") {
+                                    portal.pop(new Portal(j, i+height/blockSize-12));
+                                }
+                            }
+                        }
+                        for (var i = 0; i < LVL11.length; i++) {
+                            for (var j = 0; j < LVL11[i].length; j++) {
+                                if (LVL11[i].charAt(j) ==="0") {
+                                    blocks.push(new Block(j, i+height/blockSize-12));
+                                }
+                                if (LVL11[i].charAt(j) ==="1") {
+                                    lava.push(new Lava(j, i+height/blockSize-12));
+                                }
+                                if (LVL11[i].charAt(j) ==="2") {
+                                    portal.push(new Portal(j, i+height/blockSize-12));
+                                }
+                            }
+                        }
+                      }
+                      if(scene===12){
+                        player = new Player(0,9+height/blockSize-12);
+                        for (var i = 0; i < LVL11.length; i++) {
+                            for (var j = 0; j < LVL11[i].length; j++) {
+                                if (LVL11[i].charAt(j) ==="0") {
+                                    blocks.pop(new Block(j, i+height/blockSize-12));
+                                }
+                                if (LVL11[i].charAt(j) ==="1") {
+                                    lava.pop(new Lava(j, i+height/blockSize-12));
+                                }
+                                if (LVL11[i].charAt(j) ==="2") {
+                                    portal.pop(new Portal(j, i+height/blockSize-12));
+                                }
+                            }
+                        }
+                        for (var i = 0; i < LVL12.length; i++) {
+                            for (var j = 0; j < LVL12[i].length; j++) {
+                                if (LVL12[i].charAt(j) ==="0") {
+                                    blocks.push(new Block(j, i+height/blockSize-12));
+                                }
+                                if (LVL12[i].charAt(j) ==="1") {
+                                    lava.push(new Lava(j, i+height/blockSize-12));
+                                }
+                                if (LVL12[i].charAt(j) ==="2") {
+                                    portal.push(new Portal(j, i+height/blockSize-12));
+                                }
+                            }
+                        }
+                      }
+                      if(scene===13){
+                        player = new Player(0,9+height/blockSize-12);
+                        for (var i = 0; i < LVL12.length; i++) {
+                            for (var j = 0; j < LVL12[i].length; j++) {
+                                if (LVL12[i].charAt(j) ==="0") {
+                                    blocks.pop(new Block(j, i+height/blockSize-12));
+                                }
+                                if (LVL12[i].charAt(j) ==="1") {
+                                    lava.pop(new Lava(j, i+height/blockSize-12));
+                                }
+                                if (LVL12[i].charAt(j) ==="2") {
+                                    portal.pop(new Portal(j, i+height/blockSize-12));
+                                }
+                            }
+                        }
+                        for (var i = 0; i < LVL13.length; i++) {
+                            for (var j = 0; j < LVL13[i].length; j++) {
+                                if (LVL13[i].charAt(j) ==="0") {
+                                    blocks.push(new Block(j, i+height/blockSize-12));
+                                }
+                                if (LVL13[i].charAt(j) ==="1") {
+                                    lava.push(new Lava(j, i+height/blockSize-12));
+                                }
+                                if (LVL13[i].charAt(j) ==="2") {
+                                    portal.push(new Portal(j, i+height/blockSize-12));
+                                }
+                            }
+                        }
+                      }
+                      if(scene===14){
+                        player = new Player(0,9+height/blockSize-12);
+                        for (var i = 0; i < LVL13.length; i++) {
+                            for (var j = 0; j < LVL13[i].length; j++) {
+                                if (LVL13[i].charAt(j) ==="0") {
+                                    blocks.pop(new Block(j, i+height/blockSize-12));
+                                }
+                                if (LVL13[i].charAt(j) ==="1") {
+                                    lava.pop(new Lava(j, i+height/blockSize-12));
+                                }
+                                if (LVL13[i].charAt(j) ==="2") {
+                                    portal.pop(new Portal(j, i+height/blockSize-12));
+                                }
+                            }
+                        }
+                        for (var i = 0; i < LVL14.length; i++) {
+                            for (var j = 0; j < LVL14[i].length; j++) {
+                                if (LVL14[i].charAt(j) ==="0") {
+                                    blocks.push(new Block(j, i+height/blockSize-12));
+                                }
+                                if (LVL14[i].charAt(j) ==="1") {
+                                    lava.push(new Lava(j, i+height/blockSize-12));
+                                }
+                                if (LVL14[i].charAt(j) ==="2") {
+                                    portal.push(new Portal(j, i+height/blockSize-12));
+                                }
+                            }
+                        }
+                      }
+                      if(scene===15){
+                        player = new Player(0,9+height/blockSize-12);
+                        for (var i = 0; i < LVL14.length; i++) {
+                            for (var j = 0; j < LVL14[i].length; j++) {
+                                if (LVL14[i].charAt(j) ==="0") {
+                                    blocks.pop(new Block(j, i+height/blockSize-12));
+                                }
+                                if (LVL14[i].charAt(j) ==="1") {
+                                    lava.pop(new Lava(j, i+height/blockSize-12));
+                                }
+                                if (LVL14[i].charAt(j) ==="2") {
+                                    portal.pop(new Portal(j, i+height/blockSize-12));
+                                }
+                            }
+                        }
+                        for (var i = 0; i < LVL15.length; i++) {
+                            for (var j = 0; j < LVL15[i].length; j++) {
+                                if (LVL15[i].charAt(j) ==="0") {
+                                    blocks.push(new Block(j, i+height/blockSize-12));
+                                }
+                                if (LVL15[i].charAt(j) ==="1") {
+                                    lava.push(new Lava(j, i+height/blockSize-12));
+                                }
+                                if (LVL15[i].charAt(j) ==="2") {
+                                    portal.push(new Portal(j, i+height/blockSize-12));
+                                }
+                            }
+                        }
+                      }
+                      if(scene===16){
+                        player = new Player(0,9+height/blockSize-12);
+                        for (var i = 0; i < LVL15.length; i++) {
+                            for (var j = 0; j < LVL15[i].length; j++) {
+                                if (LVL15[i].charAt(j) ==="0") {
+                                    blocks.pop(new Block(j, i+height/blockSize-12));
+                                }
+                                if (LVL15[i].charAt(j) ==="1") {
+                                    lava.pop(new Lava(j, i+height/blockSize-12));
+                                }
+                                if (LVL15[i].charAt(j) ==="2") {
+                                    portal.pop(new Portal(j, i+height/blockSize-12));
+                                }
+                            }
+                        }
+                        for (var i = 0; i < LVL16.length; i++) {
+                            for (var j = 0; j < LVL16[i].length; j++) {
+                                if (LVL16[i].charAt(j) ==="0") {
+                                    blocks.push(new Block(j, i+height/blockSize-12));
+                                }
+                                if (LVL16[i].charAt(j) ==="1") {
+                                    lava.push(new Lava(j, i+height/blockSize-12));
+                                }
+                                if (LVL16[i].charAt(j) ==="2") {
+                                    portal.push(new Portal(j, i+height/blockSize-12));
+                                }
+                            }
+                        }
+                      }
+                      if(scene===17){
+                        player = new Player(0,0+height/blockSize-12);
+                        for (var i = 0; i < LVL16.length; i++) {
+                            for (var j = 0; j < LVL16[i].length; j++) {
+                                if (LVL16[i].charAt(j) ==="0") {
+                                    blocks.pop(new Block(j, i+height/blockSize-12));
+                                }
+                                if (LVL16[i].charAt(j) ==="1") {
+                                    lava.pop(new Lava(j, i+height/blockSize-12));
+                                }
+                                if (LVL16[i].charAt(j) ==="2") {
+                                    portal.pop(new Portal(j, i+height/blockSize-12));
+                                }
+                            }
+                        }
+                        for (var i = 0; i < LVL17.length; i++) {
+                            for (var j = 0; j < LVL17[i].length; j++) {
+                                if (LVL17[i].charAt(j) ==="0") {
+                                    blocks.push(new Block(j, i+height/blockSize-12));
+                                }
+                                if (LVL17[i].charAt(j) ==="1") {
+                                    lava.push(new Lava(j, i+height/blockSize-12));
+                                }
+                                if (LVL17[i].charAt(j) ==="2") {
+                                    portal.push(new Portal(j, i+height/blockSize-12));
+                                }
+                            }
+                        }
+                      }
+                      if(scene===18){
+                        player = new Player(0,9+height/blockSize-12);
+                        for (var i = 0; i < LVL17.length; i++) {
+                            for (var j = 0; j < LVL17[i].length; j++) {
+                                if (LVL17[i].charAt(j) ==="0") {
+                                    blocks.pop(new Block(j, i+height/blockSize-12));
+                                }
+                                if (LVL17[i].charAt(j) ==="1") {
+                                    lava.pop(new Lava(j, i+height/blockSize-12));
+                                }
+                                if (LVL17[i].charAt(j) ==="2") {
+                                    portal.pop(new Portal(j, i+height/blockSize-12));
+                                }
+                            }
+                        }
+                        for (var i = 0; i < LVL18.length; i++) {
+                            for (var j = 0; j < LVL18[i].length; j++) {
+                                if (LVL18[i].charAt(j) ==="0") {
+                                    blocks.push(new Block(j, i+height/blockSize-12));
+                                }
+                                if (LVL18[i].charAt(j) ==="1") {
+                                    lava.push(new Lava(j, i+height/blockSize-12));
+                                }
+                                if (LVL18[i].charAt(j) ==="2") {
+                                    portal.push(new Portal(j, i+height/blockSize-12));
+                                }
+                            }
+                        }
+                      }
+                      if(scene===19){
+                        player = new Player(0,9+height/blockSize-12);
+                        for (var i = 0; i < LVL18.length; i++) {
+                            for (var j = 0; j < LVL18[i].length; j++) {
+                                if (LVL18[i].charAt(j) ==="0") {
+                                    blocks.pop(new Block(j, i+height/blockSize-12));
+                                }
+                                if (LVL18[i].charAt(j) ==="1") {
+                                    lava.pop(new Lava(j, i+height/blockSize-12));
+                                }
+                                if (LVL18[i].charAt(j) ==="2") {
+                                    portal.pop(new Portal(j, i+height/blockSize-12));
+                                }
+                            }
+                        }
+                        for (var i = 0; i < LVL19.length; i++) {
+                            for (var j = 0; j < LVL19[i].length; j++) {
+                                if (LVL19[i].charAt(j) ==="0") {
+                                    blocks.push(new Block(j, i+height/blockSize-12));
+                                }
+                                if (LVL19[i].charAt(j) ==="1") {
+                                    lava.push(new Lava(j, i+height/blockSize-12));
+                                }
+                                if (LVL19[i].charAt(j) ==="2") {
+                                    portal.push(new Portal(j, i+height/blockSize-12));
+                                }
+                                if (LVL19[i].charAt(j) ==="3") {
+                                    gportal.push(new GPortal(j, i+height/blockSize-12));
+                                }
+                                if (LVL19[i].charAt(j) ==="o") {
+                                    bblocks.push(new BBlock(j, i+height/blockSize-12));
+                                }
+                            }
+                        }
+                      }
+                    }
+                }
+
+                if(this.y>3*height/2){
+                  if(scene<9){
+                    player = new Player(0,6+height/blockSize-12);
+                  }
+                  if(scene>8 && scene !== 17){
+                    player = new Player(0,9+height/blockSize-12);
+                  }
+                  if(scene===17){
+                    player = new Player(0,0+height/blockSize-12);
+                  }
+                }
+                
+                
+                // Move the player on the x axis (left or right)
+                if (keys[LEFT]) {
+                    this.x -= width/250;
+                    if(scene===20){
+                      if(normal===true){
+                        normal=false;
+                      }
+                    }
+                }
+                
+                if (keys[RIGHT]) {
+                    this.x += width/250;
+                    if(normal===false){
+                      normal=true;
+                    }
+                }
+                
+                this.x = constrain(this.x, 0, width - playerSize);
+                
+                // Find if it collides with any blocks
+                // It is very important to first to collisions on one axis before you do the other axis!
+                for (var i = 0; i < blocks.length; i++) {
+                    if (collide(blocks[i].x, blocks[i].y, blockSize, this.x, this.y, playerSize)) {
+                        this.x = this.prevX < blocks[i].x ? blocks[i].x - playerSize : blocks[i].x + blockSize;
+                    }
+                }
+
+                // Find if it collides with any Black blocks
+                for (var i = 0; i < bblocks.length; i++) {
+                    if (collide(bblocks[i].x, bblocks[i].y, blockSize, this.x, this.y, playerSize)) {
+                        this.x = this.prevX < bblocks[i].x ? bblocks[i].x - playerSize : bblocks[i].x + blockSize;
+                    }
+                }
+
+                // Find if it collides with the boss
+                if (collide(bossx-1, bossy, bossSize+2, this.x, this.y, playerSize) && scene===20) {
+                  this.x = this.prevX < bossx ? bossx - playerSize : bossx + bossSize;
+
+                  if(playerHealth>0 && darkGemRoomFade===0){
+                    if(damageTimer>=damageInterval){
+                      playerHealth-=damageAmount;
+                      damageTimer=0;
+                    }
+                    damageTimer++;
+                  }
+                  if(playerHealth===0){
+                    keys[keyCode] = false;
+                    dieFromBossVal=true;
+                  }
+                }
+                
+                // See if the player can jump
+                if (keys[UP] && this.canJump) {
+                    this.grav = -gh/27;
+                }
+                this.canJump = false;
+            };
+            
+            return Player;
+        })();
+
+        // Block constructor
+        var Block = (function() {
+            Block = function(x, y) {
+                this.x = x * blockSize;
+                this.y = y * blockSize;
+                this.prevY = this.y;
+                this.originY = this.y;
+            };
+            
+            Block.prototype.display = function() {
+                fill(200, 200, 200);
+                rect(this.x, this.y, blockSize, blockSize);
+            };
+            
+            return Block;
+        })();
+
+        // Black Block Constructor
+        var BBlock = (function() {
+            BBlock = function(x, y) {
+                this.x = x * blockSize;
+                this.y = y * blockSize;
+                this.prevY = this.y;
+                this.originY = this.y;
+            };
+            
+            BBlock.prototype.display = function() {
+                fill(25, 25, 25);
+                rect(this.x, this.y, blockSize, blockSize);
+            };
+            
+            return BBlock;
+        })();
+
+        // Lava constructor
+        var Lava = (function() {
+            Lava = function(x, y) {
+                this.x = x * blockSize;
+                this.y = y * blockSize;
+                this.prevY = this.y;
+                this.originY = this.y;
+            };
+            
+            Lava.prototype.display = function() {
+                fill(222, 69, 69);
+                rect(this.x, this.y, blockSize, blockSize);
+            };
+            
+            return Lava;
+        })();
+
+        // Portal Constructor
+        var Portal = (function() {
+            Portal = function(x, y) {
+                this.x = x * blockSize;
+                this.y = y * blockSize;
+                this.prevY = this.y;
+                this.originY = this.y;
+            };
+            
+            Portal.prototype.display = function() {
+                fill(pr, pg, 255); //0,155,255
+                ellipse(this.x+blockSize/2, this.y+blockSize/2, blockSize, blockSize);
+                if(pg<155){
+                  pgd=pgd*-1;
+                  prd=prd*-1;
+                }
+                else if(pg>240){
+                  pgd=pgd*-1;
+                  prd=prd*-1;
+                }
+                pg+=pgd;
+                pr+=prd;
+            };
+            
+            return Portal;
+        })();
+
+        // Gold Portal Constructor
+        var GPortal = (function() {
+            GPortal = function(x, y) {
+                this.x = x * blockSize;
+                this.y = y * blockSize;
+                this.prevY = this.y;
+                this.originY = this.y;
+            };
+            
+            GPortal.prototype.display = function() {
+                fill(255, gpg, gpb); //255,220,0
+                ellipse(this.x+blockSize/2, this.y+blockSize/2, blockSize, blockSize);
+                if(gpg<220){
+                  gpgd=gpgd*-1;
+                  gpbd=gpbd*-1;
+                }
+                else if(gpg>240){
+                  gpgd=gpgd*-1;
+                  gpbd=gpbd*-1;
+                }
+                gpg+=gpgd;
+                gpb+=gpbd;
+            };
+            
+            return GPortal;
+        })();
+
+        // Create  blocks 
+        for (var i = 0; i < LVL1.length; i++) {
+            for (var j = 0; j < LVL1[i].length; j++) {
+                if (LVL1[i].charAt(j) ==="0") {
+                    blocks.push(new Block(j, i+height/blockSize-12));
+                }
+                if (LVL1[i].charAt(j) ==="1") {
+                    lava.push(new Lava(j, i+height/blockSize-12));
+                }
+                if (LVL1[i].charAt(j) ==="2") {
+                    portal.push(new Portal(j, i+height/blockSize-12));
+                }
+            }
+        }
+
+
+        var rectangle=function(x,y,width,height,radius){
+          rect(x-width/2,y-height/2,width,height,radius);
+        }
+
+        var Energy = (function(){
+          Energy=function(x,y,size,rotation){
+            this.x=x;
+            this.y=y;
+            this.size=size;
+            this.rotation=rotation;
+          }
+
+          Energy.prototype.display = function(){
+            fill(82, random(75,255), 255);
+            textSize(this.size);
+            pushMatrix();
+            translate(this.x,this.y);
+            rotate(this.rotation*(PI/360));
+            text("ϟ",0,0);
+            text("ϟ",this.size/4,1.3*this.size/4);
+            popMatrix();
+          }
+
+          return Energy;
+
+        })();
+
+        var Particle = (function(){
+          Particle=function(){
+
+          }
+
+          Particle.prototype.display=function(){
+            fill(255,50);
+            ellipse(random(0,width),random(0,height),0.02*gh,0.02*gh);
+          }
+
+          return Particle;
+
+        })();
+        
+        
+
+        if(scene===20){
+          player = new Player(0,10+height/blockSize-12);
+          for (var i = 0; i < LVL1.length; i++) {
+              for (var j = 0; j < LVL1[i].length; j++) {
+                  if (LVL1[i].charAt(j) ==="0") {
+                      blocks.pop(new Block(j, i+height/blockSize-12));
+                  }
+                  if (LVL1[i].charAt(j) ==="1") {
+                      lava.pop(new Lava(j, i+height/blockSize-12));
+                  }
+                  if (LVL1[i].charAt(j) ==="2") {
+                      portal.pop(new Portal(j, i+height/blockSize-12));
+                  }
+                  if (LVL1[i].charAt(j) ==="3") {
+                      gportal.pop(new GPortal(j, i+height/blockSize-12));
+                  }
+                  if (LVL1[i].charAt(j) ==="o") {
+                      bblocks.pop(new BBlock(j, i+height/blockSize-12));
+                  }
+              }
+          }
+          for (var i = 0; i < LVL20.length; i++) {
+              for (var j = 0; j < LVL20[i].length; j++) {
+                  if (LVL20[i].charAt(j) ==="0") {
+                      blocks.push(new Block(j, i+height/blockSize-12));
+                  }
+                  if (LVL20[i].charAt(j) ==="1") {
+                      lava.push(new Lava(j, i+height/blockSize-12));
+                  }
+                  if (LVL20[i].charAt(j) ==="2") {
+                      portal.push(new Portal(j, i+height/blockSize-12));
+                  }
+                  if (LVL20[i].charAt(j) ==="3") {
+                      gportal.push(new GPortal(j, i+height/blockSize-12));
+                  }
+                  if (LVL20[i].charAt(j) ==="o") {
+                      bblocks.push(new BBlock(j, i+height/blockSize-12));
+                  }
+              }
+          }
+        }
+        
+        draw=function(){
+          noStroke();
+          cursor(ARROW);
+          textAlign(CENTER,CENTER);
+
+          //-----------------------------------------------------------
+          if(scene===-1){
+            background(0,0,0);
+            fill(50,50,50);
+            rectangle(width/2,height/2,width/3.5,height/7.5,width/60);
+            fill(setupCOLOR,setupCOLOR,setupCOLOR);
+            textSize(width/20);
+            text("Load Game",width/2,height/2);
+            if(mouseX>width/2-(width/3.5)/2 && mouseX<width/2+(width/3.5)/2 && mouseY>height/2-(height/7)/2 && mouseY<height/2+(height/7)/2){
+              cursor(HAND);
+              if(setupCOLOR<255){
+                setupCOLOR+=3.5;
+              }
+            }
+            else{
+              cursor(ARROW);
+              if(setupCOLOR>175){
+                setupCOLOR-=3.5;
+              }
+            }
+          }
+          //-----------------------------------------------------------
+          else if(scene===0){
+            background(0,0,0);
+            fill(255,255,255);
+            textSize(height/18);
+            text("Ⓣⓗⓔ",width/2,height/5.5);
+            textSize(height/5);
+            text("𝔻𝕒𝕣𝕜 𝔾𝕖𝕞",width/2,height/3);
+            pushMatrix();
+            translate(4*width/25,2.8*height/5);
+            rotate(0.174533);
+            HomePlayer(0,0,4*height/15);
+            popMatrix();
+
+            pushMatrix();
+            translate((21*width/25)-(4*height/15),(2.8*height/5)+(height/15));
+            rotate(-0.174533);
+            HE(0,0,4*height/15);
+            popMatrix();
+
+            fill(50,50,50);
+            rectangle(width/2,2*height/3,width/7,height/7.5,width/60);
+            fill(setupCOLOR,setupCOLOR,setupCOLOR);
+            textSize(width/20);
+            text("Play",width/2,2*height/3);
+            if(mouseX>width/2-(width/7)/2 && mouseX<width/2+(width/7)/2 && mouseY>2*height/3-(height/7)/2 && mouseY<2*height/3+(height/7)/2){
+              cursor(HAND);
+              if(setupCOLOR<255){
+                setupCOLOR+=3.5;
+              }
+            }
+            else{
+              cursor(ARROW);
+              if(setupCOLOR>175){
+                setupCOLOR-=3.5;
+              }
+            }
+          }
+          //-----------------------------------------------------------
+          else if(scene===1){
+            background(255, 255, 255);//255,75,75
+            fill(168, 38, 204);
+            textSize(width/50);
+            textFont(createFont("Comic Sans MS"));
+            text("LEVEL "+scene,9.25*width/10+width/40,width/70);
+
+            fill(50,50,200,150);
+            textSize(gh/15);
+            text("(Arrow keys to move)",6.25*gh/16,height-gh/3);
+
+            for (var i = 0; i < blocks.length; i++) {
+                blocks[i].display();
+            }
+            for (var i = 0; i < lava.length; i++) {
+                lava[i].display();
+            }
+            for (var i = 0; i < portal.length; i++) {
+                portal[i].display();
+            }
+            player.move();
+            player.display();
+          }
+
+          //-------------------------------------------------------------
+
+          else if(scene===2){
+            background(255, 246, 246);
+            fill(168, 38, 204);
+            textSize(width/50);
+            textFont(createFont("Comic Sans MS"));
+            text("LEVEL "+scene,9.25*width/10+width/40,width/70);
+
+            fill(50,50,200,150);
+            textSize(gh/20);
+            text("This will be a difficult journey...",6.25*gh/15,height-gh/3);
+
+            fill(50,50,200,150);
+            textSize(gh/20);
+            text("I'm on a quest to steal the dark and powerful gem...",6.5*width/10,height-2*gh/3);
+
+            for (var i = 0; i < blocks.length; i++) {
+                blocks[i].display();
+            }
+            for (var i = 0; i < lava.length; i++) {
+                lava[i].display();
+            }
+            for (var i = 0; i < portal.length; i++) {
+                portal[i].display();
+            }
+            player.move();
+            player.display();
+          }
+
+          //-------------------------------------------------------------
+
+          else if(scene===3){
+            background(255, 237, 237);
+            fill(168, 38, 204);
+            textSize(width/50);
+            textFont(createFont("Comic Sans MS"));
+            text("LEVEL "+scene,9.25*width/10+width/40,width/70);
+
+            fill(50,50,200,150);
+            textSize(gh/20);
+            text("The evil monster stole it from the gods...",width/3,height-3.25*gh/5);
+
+            fill(50,50,200,150);
+            textSize(gh/20);
+            text("...and it can cause destruction for everyone",8.5*width/15,height-5*gh/6);
+
+            for (var i = 0; i < blocks.length; i++) {
+                blocks[i].display();
+            }
+            for (var i = 0; i < lava.length; i++) {
+                lava[i].display();
+            }
+            for (var i = 0; i < portal.length; i++) {
+                portal[i].display();
+            }
+            player.move();
+            player.display();
+          }
+
+          //-------------------------------------------------------------
+
+          else if(scene===4){
+            background(255, 228, 228);
+            fill(168, 38, 204);
+            textSize(width/50);
+            textFont(createFont("Comic Sans MS"));
+            text("LEVEL "+scene,9.25*width/10+width/40,width/70);
+
+            fill(50,50,200,150);
+            textSize(gh/17);
+            text("We must steal the gem from the monster\nbefore he uses it in the wrong way!!",width/3,height-5*gh/6);
+
+            for (var i = 0; i < blocks.length; i++) {
+                blocks[i].display();
+            }
+            for (var i = 0; i < lava.length; i++) {
+                lava[i].display();
+            }
+            for (var i = 0; i < portal.length; i++) {
+                portal[i].display();
+            }
+            player.move();
+            player.display();
+          }
+
+          //-------------------------------------------------------------
+
+          else if(scene===5){
+            background(255, 219, 219);
+            fill(168, 38, 204);
+            textSize(width/50);
+            textFont(createFont("Comic Sans MS"));
+            text("LEVEL "+scene,9.25*width/10+width/40,width/70);
+
+            fill(50,50,200,150);
+            textSize(gh/17);
+            text("The monster hid it in its deadly lair...",width/2,(height/2)-blockSize);
+
+            for (var i = 0; i < blocks.length; i++) {
+                blocks[i].display();
+            }
+            for (var i = 0; i < lava.length; i++) {
+                lava[i].display();
+            }
+            for (var i = 0; i < portal.length; i++) {
+                portal[i].display();
+            }
+            player.move();
+            player.display();
+          }
+
+          //-------------------------------------------------------------
+
+          else if(scene===6){
+            background(255, 210, 210);
+            fill(168, 38, 204);
+            textSize(width/50);
+            textFont(createFont("Comic Sans MS"));
+            text("LEVEL "+scene,9.25*width/10+width/40,width/70);
+
+            fill(50,50,200,150);
+            textSize(gh/17);
+            text("Which we are inside of right now...",width/3,(height/2)-blockSize);
+
+            for (var i = 0; i < blocks.length; i++) {
+                blocks[i].display();
+            }
+            for (var i = 0; i < lava.length; i++) {
+                lava[i].display();
+            }
+            for (var i = 0; i < portal.length; i++) {
+                portal[i].display();
+            }
+            player.move();
+            player.display();
+          }
+
+          //-------------------------------------------------------------
+
+          else if(scene===7){
+            background(255, 201, 201);
+            fill(168, 38, 204);
+            textSize(width/50);
+            textFont(createFont("Comic Sans MS"));
+            text("LEVEL "+scene,9.25*width/10+width/40,width/70);
+
+            fill(50,50,200,150);
+            textSize(gh/17);
+            text("The gem is deep in this lair, so we must continue on...",width/2,(height/2)-blockSize);
+
+            for (var i = 0; i < blocks.length; i++) {
+                blocks[i].display();
+            }
+            for (var i = 0; i < lava.length; i++) {
+                lava[i].display();
+            }
+            for (var i = 0; i < portal.length; i++) {
+                portal[i].display();
+            }
+            player.move();
+            player.display();
+          }
+
+          //-------------------------------------------------------------
+
+          else if(scene===8){
+            background(255, 192, 192);
+            fill(168, 38, 204);
+            textSize(width/50);
+            textFont(createFont("Comic Sans MS"));
+            text("LEVEL "+scene,9.25*width/10+width/40,width/70);
+
+            fill(50,50,200,150);
+            textSize(gh/17);
+            text("Lava is so cruelll!!",width/2,(height/2)-blockSize);
+
+            for (var i = 0; i < blocks.length; i++) {
+                blocks[i].display();
+            }
+            for (var i = 0; i < lava.length; i++) {
+                lava[i].display();
+            }
+            for (var i = 0; i < portal.length; i++) {
+                portal[i].display();
+            }
+            player.move();
+            player.display();
+          }
+
+          //-------------------------------------------------------------
+
+          else if(scene===9){
+            background(255, 183, 183);
+            fill(168, 38, 204);
+            textSize(width/50);
+            textFont(createFont("Comic Sans MS"));
+            text("LEVEL "+scene,9.25*width/10+width/40,width/70);
+
+            fill(50,50,200,150);
+            textSize(gh/17);
+            text("But not cruel enough to stop us!",width/2,(height/2)-blockSize);
+
+            for (var i = 0; i < blocks.length; i++) {
+                blocks[i].display();
+            }
+            for (var i = 0; i < lava.length; i++) {
+                lava[i].display();
+            }
+            for (var i = 0; i < portal.length; i++) {
+                portal[i].display();
+            }
+            player.move();
+            player.display();
+          }
+
+          //-------------------------------------------------------------
+
+          else if(scene===10){
+            background(255, 174, 174);
+            fill(168, 38, 204);
+            textSize(width/50);
+            textFont(createFont("Comic Sans MS"));
+            text("LEVEL "+scene,9.25*width/10+width/40,width/70);
+
+            fill(50,50,200,150);
+            textSize(gh/17);
+            text("This is getting harder...",width/2,height-gh/3);
+
+            for (var i = 0; i < blocks.length; i++) {
+                blocks[i].display();
+            }
+            for (var i = 0; i < lava.length; i++) {
+                lava[i].display();
+            }
+            for (var i = 0; i < portal.length; i++) {
+                portal[i].display();
+            }
+            player.move();
+            player.display();
+          }
+
+          //-------------------------------------------------------------
+
+          else if(scene===11){
+            background(255, 165, 165);
+            fill(168, 38, 204);
+            textSize(width/50);
+            textFont(createFont("Comic Sans MS"));
+            text("LEVEL "+scene,9.25*width/10+width/40,width/70);
+
+            fill(50,50,200,150);
+            textSize(gh/17);
+            text("We must be more careful now...",width/2,height-gh/3);
+
+            for (var i = 0; i < blocks.length; i++) {
+                blocks[i].display();
+            }
+            for (var i = 0; i < lava.length; i++) {
+                lava[i].display();
+            }
+            for (var i = 0; i < portal.length; i++) {
+                portal[i].display();
+            }
+            player.move();
+            player.display();
+          }
+
+          //-------------------------------------------------------------
+
+          else if(scene===12){
+            background(255, 156, 156);
+            fill(168, 38, 204);
+            textSize(width/50);
+            textFont(createFont("Comic Sans MS"));
+            text("LEVEL "+scene,9.25*width/10+width/40,width/70);
+
+            fill(50,50,200,150);
+            textSize(gh/17);
+            text("We've gotten far into the lair...",width/2,height-2*gh/3);
+
+            for (var i = 0; i < blocks.length; i++) {
+                blocks[i].display();
+            }
+            for (var i = 0; i < lava.length; i++) {
+                lava[i].display();
+            }
+            for (var i = 0; i < portal.length; i++) {
+                portal[i].display();
+            }
+            player.move();
+            player.display();
+          }
+
+          //-------------------------------------------------------------
+
+          else if(scene===13){
+            background(255, 147, 147);
+            fill(168, 38, 204);
+            textSize(width/50);
+            textFont(createFont("Comic Sans MS"));
+            text("LEVEL "+scene,9.25*width/10+width/40,width/70);
+
+            fill(50,50,200,150);
+            textSize(gh/17);
+            text("Everything is becoming redder...",width/2,height-5*gh/6);
+
+            for (var i = 0; i < blocks.length; i++) {
+                blocks[i].display();
+            }
+            for (var i = 0; i < lava.length; i++) {
+                lava[i].display();
+            }
+            for (var i = 0; i < portal.length; i++) {
+                portal[i].display();
+            }
+            player.move();
+            player.display();
+          }
+
+          //-------------------------------------------------------------
+
+          else if(scene===14){
+            background(255, 138, 138);
+            fill(168, 38, 204);
+            textSize(width/50);
+            textFont(createFont("Comic Sans MS"));
+            text("LEVEL "+scene,9.25*width/10+width/40,width/70);
+
+            fill(50,50,200,150);
+            textSize(gh/17);
+            text("...and harder...",width/2,height-5*gh/6);
+
+            for (var i = 0; i < blocks.length; i++) {
+                blocks[i].display();
+            }
+            for (var i = 0; i < lava.length; i++) {
+                lava[i].display();
+            }
+            for (var i = 0; i < portal.length; i++) {
+                portal[i].display();
+            }
+            player.move();
+            player.display();
+          }
+
+          //-------------------------------------------------------------
+
+          else if(scene===15){
+            background(255, 129, 129);
+            fill(168, 38, 204);
+            textSize(width/50);
+            textFont(createFont("Comic Sans MS"));
+            text("LEVEL "+scene,9.25*width/10+width/40,width/70);
+
+            fill(50,50,200,150);
+            textSize(gh/17);
+            text("I think we're close to the end... !",width/3,height-gh/2);
+
+            for (var i = 0; i < blocks.length; i++) {
+                blocks[i].display();
+            }
+            for (var i = 0; i < lava.length; i++) {
+                lava[i].display();
+            }
+            for (var i = 0; i < portal.length; i++) {
+                portal[i].display();
+            }
+            player.move();
+            player.display();
+          }
+
+          //-------------------------------------------------------------
+
+          else if(scene===16){
+            background(255, 120, 120);
+            fill(168, 38, 204);
+            textSize(width/50);
+            textFont(createFont("Comic Sans MS"));
+            text("LEVEL "+scene,9.25*width/10+width/40,width/70);
+
+            fill(50,50,200,150);
+            textSize(gh/17);
+            text("We will soon be able to get the gem...",width/3,height-gh/2);
+
+            for (var i = 0; i < blocks.length; i++) {
+                blocks[i].display();
+            }
+            for (var i = 0; i < lava.length; i++) {
+                lava[i].display();
+            }
+            for (var i = 0; i < portal.length; i++) {
+                portal[i].display();
+            }
+            player.move();
+            player.display();
+          }
+
+          //-------------------------------------------------------------
+
+          else if(scene===17){
+            background(255, 111, 111);
+            fill(168, 38, 204);
+            textSize(width/50);
+            textFont(createFont("Comic Sans MS"));
+            text("LEVEL "+scene,9.25*width/10+width/40,width/70);
+
+            fill(50,50,200,150);
+            textSize(gh/17);
+            text("A dropper...",width/3,height-2*gh/5);
+
+            for (var i = 0; i < blocks.length; i++) {
+                blocks[i].display();
+            }
+            for (var i = 0; i < lava.length; i++) {
+                lava[i].display();
+            }
+            for (var i = 0; i < portal.length; i++) {
+                portal[i].display();
+            }
+            player.move();
+            player.display();
+          }
+
+          //-------------------------------------------------------------
+
+          else if(scene===18){
+            background(255, 102, 102);
+            fill(168, 38, 204);
+            textSize(width/50);
+            textFont(createFont("Comic Sans MS"));
+            text("LEVEL "+scene,9.25*width/10+width/40,width/70);
+
+            fill(50,50,200,150);
+            textSize(gh/17);
+            text("This one is easy...",width/3,height-3*gh/5);
+
+            for (var i = 0; i < blocks.length; i++) {
+                blocks[i].display();
+            }
+            for (var i = 0; i < lava.length; i++) {
+                lava[i].display();
+            }
+            for (var i = 0; i < portal.length; i++) {
+                portal[i].display();
+            }
+            player.move();
+            player.display();
+          }
+
+          //-------------------------------------------------------------
+
+          else if(scene===19){
+            background(255, 91, 91);
+            fill(168, 38, 204);
+            textSize(width/50);
+            textFont(createFont("Comic Sans MS"));
+            text("LEVEL "+scene,9.25*width/10+width/40,width/70);
+
+            fill(50,50,200,150);
+            textSize(gh/17);
+            text("This staircase\nleads to the gem!!!!",5*width/6,height-gh/2);
+
+            for (var i = 0; i < blocks.length; i++) {
+                blocks[i].display();
+            }
+            for (var i = 0; i < lava.length; i++) {
+                lava[i].display();
+            }
+            for (var i = 0; i < portal.length; i++) {
+                portal[i].display();
+            }
+            for (var i = 0; i < bblocks.length; i++) {
+                bblocks[i].display();
+            }
+            for (var i = 0; i < gportal.length; i++) {
+                gportal[i].display();
+            }
+            player.move();
+            player.display();
+          }
+
+          //-------------------------------------------------------------
+
+          else if(scene===20){
+            pushMatrix();
+            translate(random(-bossShaking,bossShaking),random(-bossShaking,bossShaking));
+            frameRate(60);
+            bm.play();
+
+            if(brect>=255){
+              brect-=2;
+            }
+
+            if(bmi===0){
+              bm.volume=0;
+              bmi=1;
+            }
+            if(bm.volume<599/600){
+              bm.volume = bm.volume + 1/600;
+            }
+            if(bm.volume>=599/600){
+              bm.volume=1;
+            }
+            background(255, 80, 80);
+            fill(168, 38, 204);
+            textSize(width/50);
+            textFont(createFont("Comic Sans MS"));
+            text("LEVEL "+scene,9.25*width/10+width/40,width/70);
+
+            fill(50,50,200,bossTxt);
+            textSize(gh/17);
+            text("The evil monster is guarding the gem!\nWe must defeat him!!",width/2,btxt1);
+            if(btimer<5*frameCount){
+              btimer++;
+            }
+            if(btimer>=5*frameCount){
+              btxt1-=height/60;
+            }
+
+            for (var i = 0; i < blocks.length; i++) {
+                blocks[i].display();
+            }
+            for (var i = 0; i < lava.length; i++) {
+                lava[i].display();
+            }
+            for (var i = 0; i < portal.length; i++) {
+                portal[i].display();
+            }
+            for (var i = 0; i < bblocks.length; i++) {
+                bblocks[i].display();
+            }
+            for (var i = 0; i < gportal.length; i++) {
+                gportal[i].display();
+            }
+
+            fill(0,0,0);
+            rect(0,height-blockSize,width,2*blockSize);
+
+            bossTxtTimer++;
+            if(bossTxtTimer>4*60){ //4*60
+              bossTxt-=2;
+            }
+            if(bossTxtTimer>4*60+128+1*45){ //4*60+128+1*45
+              if(bossy>=groundForBoss && bossShaking>0){
+                bossOnGround=true;
+              } else {
+                bossOnGround=false;
+              }
+              if(bossy<groundForBoss){
+                bossOnGround=false;
+              }
+              boss(bossx,bossy,bossOnGround);
+              if(bossy<height-blockSize-bossSize){
+                bossy+=(height-blockSize)/19;                
+              }
+              if(bossy>=height-blockSize-4*playerSize && bossShake===false){
+                bossShaking=width/100;
+                bossShake=true;
+              }
+              if(bossy>=height-blockSize-4*playerSize && bossShaking>0 && bossShake===true){
+                bossShaking -= width/6000;
+              }
+            }
+            if(bossTxtTimer>4*60+128+1*45+1*75){ //4*60+128+1*45+1*75
+              fill(0,0,0,bossTxt2);
+              textSize(width/25);
+              text("DIE.\n  \\",3*width/4,height-blockSize-5.5*playerSize);
+            }
+            
+            if(bossTxtTimer>6*60+128+1*45+1*75){ //6*60+128+1*45+1*75
+              bossTxt2=0;
+              stroke(175);
+              strokeWeight(1.75*height/150);
+              fill(125);
+              rectangle(width/2,1.75*height/10,9*width/10,height/7.5,width);
+
+              noStroke();
+              fill(0,180,0);
+              rect(width/2-4.5*width/10+0.8375*height/150,1.75*height/10-height/15+0.8375*height/150,((9*width/10-1.675*height/150+1)/100)*bossHealth,height/7.5-1.75*height/150+1,width);
+              noStroke();
+
+              fill(240);
+              textFont(createFont("Georgia"));
+              text("DΛЯK SQUΛRΣ: ",0.875*width/2,1.75*height/10);
+
+              fill(255);
+              textFont(createFont("Comic Sans MS"));
+              textAlign(LEFT,CENTER);
+              text(bossHealth+"%",1.185*width/2,1.75*height/10);
+              textAlign(CENTER,CENTER);
+              textSize(1.25*width/50);
+              textAlign(LEFT,TOP);
+              text("YOUR HEALTH: "+ceil(playerHealth)+"%",width/100,0);
+              textAlign(CENTER,CENTER);
+
+              if(bossShooter.length<3){
+                bossShootTimer++;
+              }
+
+              for (var i = bossShooter.length-1, b = bossShooter[i]; i >= 0; b = bossShooter[--i]) {
+                fill(25);
+                stroke(100);
+                strokeWeight(width/400);
+                ellipse(b[0],b[1],bossShootSize,bossShootSize);
+                var theta = atan2(player.y+playerSize/2 - b[1], player.x+playerSize/2 - b[0]);
+                if(bossFollow===true){
+                    b[0] += cos(theta)*(width*height/333000);
+                    b[1] += sin(theta)*(width*height/333000);
+                }
+                if(collide(player.x,player.y,playerSize,b[0]-bossShootSize/2,b[1]-bossShootSize/2,bossShootSize)){
+                  if(playerHealth>0 && playerHealth>6){
+                    playerHealth-=7;
+                  }
+                  else if(playerHealth<=6){
+                    playerHealth=0;
+                  }
+                  if(bossShooter.length>1){
+                    bSI = b;
+                    bossAttackHitStay=true;
+                    bossShooter.splice(i,1);
+                  }
+                  else if(bossShooter.length<=1){
+                    bSI = b;
+                    bossAttackHitStay=true;
+                    //bossShooter.fill(bossShooter, null);
+                    bossShooter.splice(i,1);
+                  }
+                }
+              }
+              if(bossAttackHitStay===true){
+                bossAttackHit++;
+                noStroke();
+                rectMode(CENTER);
+                fill(255, 179, 0);
+                rect(bSI[0],bSI[1],0.01,0,random(-bossShootSize,-3*bossShootSize));
+                rectMode(LEFT,LEFT);
+                if(bossAttackHit>35){
+                  bossAttackHit=0;
+                  bossAttackHitStay=false;
+                }
+              }
+
+              if(playerHealth===0){
+                keys[keyCode] = false;
+                dieFromBossVal=true;
+              }
+              if(playerFlying===false){
+                playerFlyDisplay=false;
+              }
+
+              if(bossShootTimer>bossShootSpawn && bossShooter.length<3){
+                bossShooter.push([Math.round(bossx), Math.round(bossy+bossSize/2)]);
+                bossShootTimer=0;
+              }
+
+              noStroke();
+              bowglow(width/2,bowPowerY,2.75*playerSize);
+              bow(width/2-playerSize/5.25,bowPowerY,playerSize);
+              if(bowPowerY<height/2){
+                bowPowerY+=height/40;
+              }
+              if(bowPowerY>=height/2 && bowPowerY<height){
+                bowPowerShow=true;
+              }
+            }
+
+            if(player.y>height-blockSize/2){
+              undergroundTimer++;
+              player = new Player(0,9+height/blockSize-12);
+            }
+            if(undergroundTimer>=240){
+              playerHealth=0;
+            }
+
+            if(bowHeld===true){
+              bowTimer++;
+              for(var i = playerArrows.length-1, p = playerArrows[i]; i>=0; p = playerArrows[--i]){
+                p.display();
+                p.update();
+              }
+
+              if(bowUsed<3){
+                fill(255);
+                textFont(createFont("Monospace"));
+                textAlign(RIGHT,CENTER);
+                textSize(width/50);
+                text("Bow & Arrow",9.5*width/10,3*height/10);
+                text("Bow & Arrow",9.5*width/10+1,3*height/10);
+                text("Bow & Arrow",9.5*width/10,3*height/10-1);
+                text("Bow & Arrow",9.5*width/10+1,3*height/10-1);
+
+                textAlign(RIGHT,TOP);
+                text("S and D to\naim, SPACE\nto shoot",9.5*width/10,3*height/10+width/75);
+
+                textFont(createFont("Comic Sans MS"));
+              }
+
+
+
+              //duplicate for covering arrow
+              boss(bossx,bossy,bossOnGround);
+            }
+
+            if(bossHealth<=82){
+              bossx+=random(bossmove1,bossmove2);
+
+              if(bossx+bossSize>width){
+                bossmove1 = -width/110;
+                bossmove2 = -width/60;
+              }
+              if(bossx<0){
+                bossmove1=width/110;
+                bossmove2=width/50;
+              }
+            }
+
+            if(bossHealth<=0){
+              bossHealth=0;
+              bossShooter.fill(bossShooter, null);
+              if(darkGemRoomFade<255){
+                darkGemRoomFade+=2;
+              }
+              if(darkGemRoomFade>=255){
+                scene=21;
+              }
+            }
+
+            stroke(255,80,80);
+            strokeWeight(width/100);
+            fill(255, 80, 80);
+            ellipse(0,0,bossShootSize,bossShootSize);
+
+            noStroke();
+            player.move();
+            player.display();
+            brect-=2;
+            popMatrix();
+          }
+
+          //-------------------------------------------------------------
+
+          else if(scene===21){
+            frameRate(60);
+            cursor(ARROW);
+            if(bm.volume>1/60){
+              bm.volume -= 1/60;
+            }
+            if(bm.volume<=1/60){
+              bm.volume=0;
+            }
+            if(darkGemRoomFade>0){
+              darkGemRoomFade-=2;
+            }
+
+            background(0);
+            if(dgBoom===false && voltageCategory==="0ᑎ"){
+              dg.play();
+              dgBoom=true;
+            }
+
+            textFont(createFont("Monospace"));
+            fill(0,255,0);
+            textSize(width/50);
+            text("EXTREME VOLTAGE = SELF-DESTRUCTION",width/2,9*height/10);
+
+
+            fill(255,0,0);
+            textSize(width/25);
+            text("EXTREME VOLTAGE: "+voltageCategory,width/2,height/10);
+            fill(255,255,0);
+            textSize(width/75);
+            if(voltageCategory==="off"){
+              text("(Click above to Change)",width/2,height/10+1.5*width/50);
+            }
+
+            if(mouseX>width/4 && mouseX<3*width/4 && mouseY>height/10-width/50 && mouseY<height/10+width/50 && voltageCategory==="off"){
+              cursor(HAND);
+            } else {
+              cursor(ARROW);
+            }
+
+            if(voltageCategory==="0ᑎ"){
+              if(voltage<gh/3){
+                voltage+=(gh/3-gh/10)/140;
+              }
+              if(gemVolt>0.1*gh && gemCompressed===false){
+                gemVolt-=(0.4*gh-0.1*gh)/140;
+              }
+              if(gemVolt<=0.1*gh){
+                gemCompressed=true;
+              }
+              if(gemCompressed===true){
+                if(gemVolt<10*gh){
+                  gemVolt+=0.2*gh;
+                }
+                gemplode+=1.5;
+                if(gemplode>=255){
+                  scene=22;
+                }
+              }
+            }
+
+
+            textFont(createFont("Comic Sans MS"));
+            //left side from top to bottom
+            pushMatrix();
+            translate(width/2,height/2);
+            rotate(330*PI/360);
+            new Energy(width/4.5,width/4.5,voltage,-30).display(); 
+            popMatrix();
+
+            pushMatrix();
+            translate(width/2,height/2);
+            rotate(285*PI/360);
+            new Energy(width/4.5,width/4.5,voltage,-30).display(); 
+            popMatrix();
+
+            pushMatrix();
+            translate(width/2,height/2);
+            rotate(240*PI/360);
+            new Energy(width/4.5,width/4.5,voltage,-30).display(); 
+            popMatrix();
+
+            //right side from top to bottom
+            pushMatrix();
+            translate(width/2,height/2);
+            rotate(-140*PI/360);
+            new Energy(width/4.5,width/4.5,voltage,-30).display(); 
+            popMatrix();
+
+            pushMatrix();
+            translate(width/2,height/2);
+            rotate(-95*PI/360);
+            new Energy(width/4.5,width/4.5,voltage,-30).display(); 
+            popMatrix();
+
+            pushMatrix();
+            translate(width/2,height/2);
+            rotate(-50*PI/360);
+            new Energy(width/4.5,width/4.5,voltage,-30).display(); 
+            popMatrix();
+
+            glow(width/2,height/2,2.75*0.4*gh);
+            pushMatrix();
+            translate(width/2,height/2);
+            scale(gemVolt);
+            darkGem(0,0,1);
+            popMatrix();
+          }
+
+          //-------------------------------------------------------------
+
+          else if(scene===22){
+            noStroke();
+            if(gemplode>0){
+              gemplode-=2;
+            }
+
+            background(50);
+            glow(width/2,height/2,0.9*gh);
+            darkGem(width/2,height/2,0.4*gh);
+            fill(255);
+            textAlign(CENTER,CENTER);
+            textSize(width/25);
+            text("Congrats, you destroyed the gem!",width/2,height/10);
+            text("You win! Thanks for playing!",width/2,9*height/10);
+            fill(255);
+            textSize(width/25);
+            text("𝔻𝕒𝕣𝕜\n𝔾𝕖𝕞",width/2,height/2);
+
+            voltage=0.05*gh;
+
+            //left side from top to bottom
+            pushMatrix();
+            translate(width/2,height/2);
+            rotate(330*PI/360);
+            new Energy(width/4.5,width/4.5,voltage,-30).display(); 
+            popMatrix();
+
+            pushMatrix();
+            translate(width/2,height/2);
+            rotate(285*PI/360);
+            new Energy(width/4.5,width/4.5,voltage,-30).display(); 
+            popMatrix();
+
+            pushMatrix();
+            translate(width/2,height/2);
+            rotate(240*PI/360);
+            new Energy(width/4.5,width/4.5,voltage,-30).display(); 
+            popMatrix();
+
+            //right side from top to bottom
+            pushMatrix();
+            translate(width/2,height/2);
+            rotate(-140*PI/360);
+            new Energy(width/4.5,width/4.5,voltage,-30).display(); 
+            popMatrix();
+
+            pushMatrix();
+            translate(width/2,height/2);
+            rotate(-95*PI/360);
+            new Energy(width/4.5,width/4.5,voltage,-30).display(); 
+            popMatrix();
+
+            pushMatrix();
+            translate(width/2,height/2);
+            rotate(-50*PI/360);
+            new Energy(width/4.5,width/4.5,voltage,-30).display(); 
+            popMatrix();
+          }
+
+          if(dieFromBoss<2*width && dieFromBossVal===true){
+            dieFromBoss+=2*width/25-0.02*width;
+          }
+          if(dieFromBoss>=2*width && dieFromBossVal===true){
+            bm.volume=0;
+            dieFromBoss=0;
+            dieFromBossVal=false;
+            scene=19;
+            
+            player = new Player(0,9+height/blockSize-12);
+            for (var i = 0; i < LVL20.length; i++) {
+                for (var j = 0; j < LVL20[i].length; j++) {
+                    if (LVL20[i].charAt(j) ==="0") {
+                        blocks.pop(new Block(j, i+height/blockSize-12));
+                    }
+                    if (LVL20[i].charAt(j) ==="1") {
+                        lava.pop(new Lava(j, i+height/blockSize-12));
+                    }
+                    if (LVL20[i].charAt(j) ==="2") {
+                        portal.pop(new Portal(j, i+height/blockSize-12));
+                    }
+                }
+            }
+            for (var i = 0; i < LVL19.length; i++) {
+                for (var j = 0; j < LVL19[i].length; j++) {
+                    if (LVL19[i].charAt(j) ==="0") {
+                        blocks.push(new Block(j, i+height/blockSize-12));
+                    }
+                    if (LVL19[i].charAt(j) ==="1") {
+                        lava.push(new Lava(j, i+height/blockSize-12));
+                    }
+                    if (LVL19[i].charAt(j) ==="2") {
+                        portal.push(new Portal(j, i+height/blockSize-12));
+                    }
+                    if (LVL19[i].charAt(j) ==="3") {
+                        gportal.push(new GPortal(j, i+height/blockSize-12));
+                    }
+                    if (LVL19[i].charAt(j) ==="o") {
+                        bblocks.push(new BBlock(j, i+height/blockSize-12));
+                    }
+                }
+            }
+          }
+
+          fill(255,0,0);
+          ellipse(width/2,height/2,dieFromBoss,dieFromBoss);
+          fill(0,0,0,brect);
+          rect(0,0,width,height);
+          fill(0,0,0,brect1);
+          rect(0,0,width,height);
+          fill(255,darkGemRoomFade);
+          rect(0,0,width,height);
+          fill(255,gemplode);
+          rect(0,0,width,height);
+
+          mouseClicked=function(){
+            /**
+            if(scene===-1 && mouseX>width/2-(width/3.5)/2 && mouseX<width/2+(width/3.5)/2 && mouseY>height/2-(height/7)/2 && mouseY<height/2+(height/7)/2){
+              music=true;
+              scene=0;
+            }
+            **/
+            if(scene===0 && mouseX>width/2-(width/7)/2 && mouseX<width/2+(width/7)/2 && mouseY>2*height/3-(height/7)/2 && mouseY<2*height/3+(height/7)/2){
+              music=true;
+              scene=1;
+              player = new Player(0,6+height/blockSize-12);
+            }
+
+            if(mouseX>width/4 && mouseX<3*width/4 && mouseY>height/10-width/50 && mouseY<height/10+width/50 && scene===21 && voltageCategory==="off"){
+              voltageCategory="0ᑎ";
+            }
+          };
+          //keys  
+          keyPressed = function() {
+            keys[keyCode] = true;
+          };
+
+          keyReleased = function() {
+            keys[keyCode] = false;
+          };
+
+          //music
+          if(music===true){
+            bgm.play();
+            bgm.volume=1.0;
+            music=false;
+          }
+
+          if(scene===22){
+            for (var i=0; i<10; i++){
+              new Particle().display();
+            }
+          }
+          
+        }
+        
+
+
+
+
+      }
+      }
+  var canvas = document.getElementById("mycanvas");
+  var processingInstance = new Processing(canvas, programCode);
+  </script>
+</html>
