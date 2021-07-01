@@ -2522,14 +2522,14 @@
               }
 
               for (var i = bossShooter.length-1, b = bossShooter[i]; i >= 0; b = bossShooter[--i]) {
-                fill(25);
-                stroke(100);
+                fill(25,222);
+                stroke(100,222);
                 strokeWeight(width/400);
                 ellipse(b[0],b[1],bossShootSize,bossShootSize);
                 var theta = atan2(player.y+playerSize/2 - b[1], player.x+playerSize/2 - b[0]);
                 if(bossFollow===true){
-                    b[0] += cos(theta)*(width*height/333000);
-                    b[1] += sin(theta)*(width*height/333000);
+                    b[0] += cos(theta)*((width*height/playerSize)/6000);
+                    b[1] += sin(theta)*((width*height/playerSize)/6000);
                 }
                 if(collide(player.x,player.y,playerSize,b[0]-bossShootSize/2,b[1]-bossShootSize/2,bossShootSize)){
                   if(playerHealth>0 && playerHealth>6){
