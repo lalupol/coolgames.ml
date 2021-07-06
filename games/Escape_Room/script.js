@@ -4,7 +4,7 @@ var programCode = function(processingInstance) {
         //variables
         var bgm=new Audio('ghostly-music.mp3');
         var bgmM;
-        bgmM=true;
+        window.onclick=function(){bgmM=true};
         var mute=false;
         var canva=document.getElementById("mycanvas");
         
