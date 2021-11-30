@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Glacier Land</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+  </head>
+  <body>
+    <div id="welcome"><span style="font-size:75px">Welcome to...</span><br><b>Glacier Land</b><p style="font-size:20px; margin-top:5px;"><span style="font-size:30px">Click and drag to move</span><br><span style="font-size:40px;"></span>(press 'e' to hide this text and press any key to start the music)</p></div>
+    <script>
+      var sound = new Audio("snow_sound.mp3");
+      function play(){
+        sound.play();
+      }
+
+      document.onkeydown = function(e) {
+        play();
+        if(e.keyCode === 69){
+          document.getElementById("welcome").style.display = "none";
+        }
+      };
+    </script>
+    <script src="https://threejs.org/build/three.js"></script>
+    <script src="OrbitControls.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,32 @@
+html, body {
+	overflow: hidden;
+	user-select: none;
+  padding: 0;
+  margin: 0;
+}
+
+canvas {
+	width: 100%; 
+	height: 100%;
+	padding: 0;
+}
+
+#welcome {
+  z-index: 1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+  text-align: center;
+  font-family: Raleway;
+  color: rgb(255,255,255);
+  font-size: 100px;
+  text-shadow: 2px 2px 5px rgb(0,0,0, 0.4);
+}
+
+#iframe {
+  width: 100vw;
+  height: 100vh;
+}
